@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Ashby - Offensive Security Engineer</title>
+    <style>
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #151932;
+            --bg-card: #1a1f3a;
+            --accent-cyan: #00f0ff;
+            --accent-green: #00ff88;
+            --accent-red: #ff3366;
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --border-color: #2a2f4a;
+            --font-mono: 'Courier New', monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        nav .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .tagline {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--accent-green);
+            margin-bottom: 2rem;
+        }
+
+        .hero .intro {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .contact-item a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent-green);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .social-btn:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Education Section */
+        .education-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .education-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-green);
+        }
+
+        .education-card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .cert-badge {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            transition: left 0.5s;
+        }
+
+        .cert-badge:hover::before {
+            left: 100%;
+        }
+
+        .cert-badge:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        .cert-badge .cert-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-badge .cert-name {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: var(--accent-cyan);
+        }
+
+        .project-card .description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            font-size: 0.95rem;
+        }
+
+        .project-stats {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 4px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .project-btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .project-btn:hover {
+            border-color: var(--accent-cyan);
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+        }
+
+        .project-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .project-btn.disabled:hover {
+            border-color: var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .skill-category:hover {
+            border-color: var(--accent-green);
+        }
+
+        .skill-category h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            padding: 0.4rem 0.9rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        /* Achievements Section */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .achievement-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-red);
+        }
+
+        .achievement-card:hover {
+            border-color: var(--accent-red);
+            transform: translateX(5px);
+        }
+
+        .achievement-card .date {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .achievement-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Communities Section */
+        .communities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .community-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .community-card:hover {
+            border-color: var(--accent-green);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .community-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .community-card h3 {
+            font-size: 1.4rem;
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .community-type {
+            padding: 0.25rem 0.75rem;
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .community-type.paid {
+            background: var(--accent-red);
+        }
+
+        .community-members {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .community-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .community-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .community-btn:hover {
+            background: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+
+            nav .nav-links {
+                display: none;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .communities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .social-links {
+                flex-direction: column;
+            }
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .scroll-top:hover {
+            background: var(--accent-green);
+            transform: translateY(-5px);
+        }
+
+        .scroll-top.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">&lt;DA /&gt;</div>
+            <ul class="nav-links">
+                <li><a href="#education">Education</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#achievements">Achievements</a></li>
+                <li><a href="#communities">Communities</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>David Ashby</h1>
+            <p class="subtitle">Offensive Security Engineer | Physical Penetration Tester | Cybersecurity Specialist</p>
+            <p class="tagline">&gt; A hacker by nature, programmer by trade</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <a href="mailto:d@vidashby.com" target="_blank">d@vidashby.com</a>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <a href="tel:801.857.9474">801.857.9474</a>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <span>Helena, MT</span>
+                </div>
+            </div>
+
+            <p class="intro">
+                With 8 years of IT/Engineering experience and a BS in Cybersecurity (graduating 2026), I'm the #1 n8n creator, a contributor to a 71.9k star GitHub project, and an ethical hacker focused on offensive security. I specialize in finding vulnerabilities before the bad guys do.
+            </p>
+
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/david-ashby/" class="social-btn" target="_blank">
+                    <span>💼</span> LinkedIn
+                </a>
+                <a href="https://github.com/Cfomodz" class="social-btn" target="_blank">
+                    <span>💻</span> GitHub
+                </a>
+                <a href="https://n8n.io/creators/" class="social-btn" target="_blank">
+                    <span>🤖</span> n8n
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Certifications -->
+    <section id="education">
+        <div class="section-header">
+            <h2>Education &amp; Certifications</h2>
+            <p>Academic foundation and professional credentials</p>
+        </div>
+
+        <div class="education-card">
+            <h3>Bachelor of Science, Cybersecurity and Information Assurance</h3>
+            <p>Western Governors University | Expected Graduation: 2026</p>
+        </div>
+
+        <div class="certifications-grid">
+            <div class="cert-badge">
+                <div class="cert-icon">🎯</div>
+                <div class="cert-name">CompTIA PenTest+</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">🔍</div>
+                <div class="cert-name">CompTIA CySA+</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">🛡️</div>
+                <div class="cert-name">CompTIA Security+</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">🌐</div>
+                <div class="cert-name">CompTIA Network+</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">💻</div>
+                <div class="cert-name">CompTIA A+</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">📊</div>
+                <div class="cert-name">CompTIA Data+</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">📋</div>
+                <div class="cert-name">CompTIA Project+</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">🔧</div>
+                <div class="cert-name">ITIL 4 Foundation</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">🐧</div>
+                <div class="cert-name">Linux Essentials</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">🔐</div>
+                <div class="cert-name">Network Vulnerability Assessment Professional</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">🔒</div>
+                <div class="cert-name">Network Security Professional</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">📈</div>
+                <div class="cert-name">Security Analytics Professional</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">⚙️</div>
+                <div class="cert-name">IT Operations Specialist</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">🏗️</div>
+                <div class="cert-name">Secure Infrastructure Specialist</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">☁️</div>
+                <div class="cert-name">CCSP (Optional Voucher)</div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">🎖️</div>
+                <div class="cert-name">SSCP - Associate of (ISC)²</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section id="projects">
+        <div class="section-header">
+            <h2>Featured Projects</h2>
+            <p>Notable work in automation, security, and open-source contributions</p>
+        </div>
+        <div class="projects-grid">
+            <!-- Project 1: n8n Creator -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://placehold.co/400x800.png'); background-size: cover; background-position: center;">
+                    <span style="background: rgba(10, 14, 39, 0.8); padding: 0.5rem 1rem; border-radius: 4px;">n8n Workflows Screenshot</span>
+                </div>
+                <div class="project-content">
+                    <h3>#1 n8n Creator - Automated Automation</h3>
+                    <p class="description">Ranked #1 Verified Creator on n8n.io with 204 workflow templates (most on the platform). Built Python automation to generate n8n workflows from API specifications, then reverse-engineered the creators dashboard API to automate uploading. Meta-automation: automating the creation of automation, then automating the distribution.</p>
+                    <div class="project-stats">164 workflows sold | $5,389 revenue | 204 templates live</div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">n8n</span>
+                        <span class="tech-tag">API Reverse Engineering</span>
+                        <span class="tech-tag">OAuth2</span>
+                        <span class="tech-tag">Automation</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://n8n.io/creators/" class="project-btn" target="_blank">View Project</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Browser-Use -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://placehold.co/400x800.png'); background-size: cover; background-position: center;">
+                    <span style="background: rgba(10, 14, 39, 0.8); padding: 0.5rem 1rem; border-radius: 4px;">Browser-Use GitHub</span>
+                </div>
+                <div class="project-content">
+                    <h3>Browser-Use: AI Web Automation</h3>
+                    <p class="description">Contributed to high-profile open-source AI automation project (71.9k+ GitHub stars). Closed 50 issues in 48 hours, focusing on security vulnerabilities, bot detection bypass, and credential confidentiality. Collaborated with founders on security hardening.</p>
+                    <div class="project-stats">71.9k stars | 8.5k forks | 262 contributors</div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Playwright</span>
+                        <span class="tech-tag">AI Integration</span>
+                        <span class="tech-tag">Security</span>
+                        <span class="tech-tag">Web Automation</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://browser-use.com/" class="project-btn" target="_blank">View Project</a>
+                        <a href="https://github.com/browser-use/browser-use" class="project-btn" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: Chrome WebSocket Proxy -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://placehold.co/400x800.png'); background-size: cover; background-position: center;">
+                    <span style="background: rgba(10, 14, 39, 0.8); padding: 0.5rem 1rem; border-radius: 4px;">OBS Integration Screenshot</span>
+                </div>
+                <div class="project-content">
+                    <h3>Chrome WebSocket Proxy for OBS</h3>
+                    <p class="description">Chrome extension that monitors WebSocket traffic and forwards to OBS for real-time updates during live streaming. Enables entirely automated live streaming when paired with generative voice models. Use cases automatic updates based on browser events (scores, votes, purchases).</p>
+                    <div class="project-stats">Real-time event monitoring | OBS integration</div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">WebSocket</span>
+                        <span class="tech-tag">Chrome Extensions</span>
+                        <span class="tech-tag">OBS</span>
+                        <span class="tech-tag">Live Streaming</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Patch-Code-Prosperity/Chrome-WebSocket-Proxy-for-OBS" class="project-btn" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: Pythonic Schwab API -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://placehold.co/400x800.png'); background-size: cover; background-position: center;">
+                    <span style="background: rgba(10, 14, 39, 0.8); padding: 0.5rem 1rem; border-radius: 4px;">API Documentation</span>
+                </div>
+                <div class="project-content">
+                    <h3>Pythonic Schwab API</h3>
+                    <p class="description">Created Python wrapper for Charles Schwab trading API to help developers transition during TD Ameritrade to Schwab merger. Public code shared to support community during platform migration.</p>
+                    <div class="project-stats">Community support | Trading automation</div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Trading APIs</span>
+                        <span class="tech-tag">Financial Automation</span>
+                        <span class="tech-tag">REST APIs</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Patch-Code-Prosperity/Pythonic-Schwab-API" class="project-btn" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5: Brother Label Printer -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://placehold.co/400x800.png'); background-size: cover; background-position: center;">
+                    <span style="background: rgba(10, 14, 39, 0.8); padding: 0.5rem 1rem; border-radius: 4px;">Label Printer Automation</span>
+                </div>
+                <div class="project-content">
+                    <h3>Brother Label Printer Automation</h3>
+                    <p class="description">Automatic label printer system with conditional printing logic. If X happens, print label with context of X. Use cases incrementing inventory stickers, buyer tags, visitor badges for events.</p>
+                    <div class="project-stats">Hardware automation | Event-driven printing</div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Hardware Integration</span>
+                        <span class="tech-tag">Label Printing</span>
+                        <span class="tech-tag">Automation</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/Cfomodz/Brother-QL-710W_Incrementing-Label-Creator" class="project-btn" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6: Physical Security -->
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('https://placehold.co/400x800.png'); background-size: cover; background-position: center;">
+                    <span style="background: rgba(10, 14, 39, 0.8); padding: 0.5rem 1rem; border-radius: 4px;">Physical Security Testing</span>
+                </div>
+                <div class="project-content">
+                    <h3>Physical Security Research</h3>
+                    <p class="description">15+ years of physical penetration testing experience. Documented vulnerabilities in access control systems across hospitals, banks, airports, and commercial facilities. Developed methodologies for covert entry, keycode capture, physical bypass techniques, and social engineering. Lock picking since 2011.</p>
+                    <div class="project-stats">15+ years experience | Ethical hacking only</div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Lock Picking</span>
+                        <span class="tech-tag">Physical Bypass</span>
+                        <span class="tech-tag">OSINT</span>
+                        <span class="tech-tag">Social Engineering</span>
+                        <span class="tech-tag">Access Control</span>
+                    </div>
+                    <div class="project-links">
+                        <span class="project-btn disabled">Private/Confidential</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="section-header">
+            <h2>Core Competencies</h2>
+            <p>Technical skills and expertise across multiple domains</p>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3><span>🎯</span> Offensive Security</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Penetration Testing</span>
+                    <span class="skill-tag">Physical Security</span>
+                    <span class="skill-tag">Lock Picking</span>
+                    <span class="skill-tag">Red Teaming</span>
+                    <span class="skill-tag">Reverse Engineering</span>
+                    <span class="skill-tag">Social Engineering</span>
+                    <span class="skill-tag">OSINT</span>
+                    <span class="skill-tag">Web Application Security</span>
+                    <span class="skill-tag">Network Security</span>
+                    <span class="skill-tag">Threat Hunting</span>
+                    <span class="skill-tag">Covert Entry Techniques</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><span>💻</span> Programming</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python (Expert)</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">HTML/CSS</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">Duckyscript</span>
+                    <span class="skill-tag">REST APIs</span>
+                    <span class="skill-tag">Web Scraping</span>
+                    <span class="skill-tag">Flask</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><span>🔧</span> Tools &amp; Frameworks</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Burp Suite</span>
+                    <span class="skill-tag">Kali Linux</span>
+                    <span class="skill-tag">Wireshark</span>
+                    <span class="skill-tag">n8n</span>
+                    <span class="skill-tag">IFTTT</span>
+                    <span class="skill-tag">Zapier</span>
+                    <span class="skill-tag">Integromat (Make)</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Active Directory</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><span>⚡</span> Hardware &amp; Electronics</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Raspberry Pi</span>
+                    <span class="skill-tag">Arduino</span>
+                    <span class="skill-tag">3D Printing</span>
+                    <span class="skill-tag">Laser Engraving</span>
+                    <span class="skill-tag">NFC/RFID Exploitation</span>
+                    <span class="skill-tag">HID Exploits</span>
+                    <span class="skill-tag">Access Control Bypass</span>
+                    <span class="skill-tag">Hardware Hacking</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><span>🌐</span> Infrastructure</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Linux Administration</span>
+                    <span class="skill-tag">CentOS</span>
+                    <span class="skill-tag">Networking (TCP/IP, DNS, DHCP)</span>
+                    <span class="skill-tag">VPN &amp; Firewalls</span>
+                    <span class="skill-tag">Cloud (AWS, Google Cloud)</span>
+                    <span class="skill-tag">Server Management</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements">
+        <div class="section-header">
+            <h2>Achievements &amp; Highlights</h2>
+            <p>Notable accomplishments and milestones</p>
+        </div>
+
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <div class="date">AUGUST 2025</div>
+                <h3>YC Agents Hackathon Judge</h3>
+                <p>Evaluated AI-driven security automation submissions and provided technical feedback</p>
+            </div>
+
+            <div class="achievement-card">
+                <div class="date">90 DAYS</div>
+                <h3>550,000+ Content Views</h3>
+                <p>300k+ YouTube shorts views and 250k+ TikTok views using automated content distribution</p>
+            </div>
+
+            <div class="achievement-card">
+                <div class="date">2017-2024</div>
+                <h3>E-Commerce Success</h3>
+                <p>Sold 4,700+ items on Whatnot to 10,000+ followers using AI-powered sourcing automation. Enabled first home purchase while in 20s.</p>
+            </div>
+
+            <div class="achievement-card">
+                <div class="date">MULTIPLE YEARS</div>
+                <h3>DefCon Conference Attendee</h3>
+                <p>Hundreds of hours of training on exploits, system architectures, protocols, and methodologies</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Communities Section -->
+    <section id="communities">
+        <div class="section-header">
+            <h2>Community Leadership</h2>
+            <p>Building and nurturing automation communities</p>
+        </div>
+
+        <div class="communities-grid">
+            <div class="community-card">
+                <div class="community-header">
+                    <div>
+                        <h3>(n8n) Nodes Automation Lab</h3>
+                        <div class="community-members">511+ members</div>
+                    </div>
+                    <span class="community-type">Free</span>
+                </div>
+                <p>Free community where 500+ people learn automation principles, collaborate, and access workflow library</p>
+                <a href="https://www.skool.com/n8n-nodes-automation-lab-1570" class="community-btn" target="_blank">Join Community</a>
+            </div>
+
+            <div class="community-card">
+                <div class="community-header">
+                    <div>
+                        <h3>Beyond Nodes Automation Lab</h3>
+                        <div class="community-members">99 members</div>
+                    </div>
+                    <span class="community-type paid">Paid</span>
+                </div>
+                <p>Paid community teaching how to make money using n8n &amp; AI automation</p>
+                <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="community-btn" target="_blank">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#hero">Home</a>
+                <a href="#education">Education</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#communities">Communities</a>
+            </div>
+            
+            <div class="social-links" style="margin-bottom: 2rem;">
+                <a href="https://www.linkedin.com/in/david-ashby/" class="social-btn" target="_blank">
+                    <span>💼</span> LinkedIn
+                </a>
+                <a href="https://github.com/Cfomodz" class="social-btn" target="_blank">
+                    <span>💻</span> GitHub
+                </a>
+                <a href="https://n8n.io/creators/" class="social-btn" target="_blank">
+                    <span>🤖</span> n8n
+                </a>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 David Ashby. All rights reserved.</p>
+                <p>Last updated: November 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        ↑
+    </button>
+
+    <script>
+        // Scroll to top button visibility
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.getElementById('scrollTop');
+            if (window.pageYOffset > 500) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll for cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.querySelectorAll('.project-card, .skill-category, .achievement-card, .community-card, .cert-badge').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
