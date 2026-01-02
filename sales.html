@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Manager Dashboard</title>
+    <style>
+        :root {
+            --color-bg-primary: #0f172a;
+            --color-bg-secondary: #1e293b;
+            --color-bg-tertiary: #334155;
+            --color-text-primary: #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --color-accent: #3b82f6;
+            --color-accent-hover: #2563eb;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --color-border: #475569;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--color-bg-secondary);
+            border-right: 1px solid var(--color-border);
+            padding: var(--spacing-lg);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .nav-item {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            color: var(--color-text-secondary);
+            width: 100%;
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background-color: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+        }
+
+        .nav-item.active {
+            background-color: var(--color-accent);
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .top-bar {
+            background-color: var(--color-bg-secondary);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+
+        .top-bar h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .top-bar-right {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--color-accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-accent-hover);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background-color: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 0.875rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 6px;
+            background-color: var(--color-bg-tertiary);
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--color-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .card {
+            background-color: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--color-accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .agent-item {
+            padding: var(--spacing-md);
+            background-color: var(--color-bg-tertiary);
+            border-radius: 6px;
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+
+        .agent-item:hover {
+            background-color: #475569;
+            border-color: var(--color-accent);
+        }
+
+        .agent-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .agent-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--color-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .agent-details {
+            flex: 1;
+        }
+
+        .agent-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .agent-status {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+        }
+
+        .status-badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-online {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--color-success);
+        }
+
+        .status-busy {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: var(--color-warning);
+        }
+
+        .status-offline {
+            background-color: rgba(107, 114, 128, 0.2);
+            color: #9ca3af;
+        }
+
+        .call-item {
+            padding: var(--spacing-md);
+            background-color: var(--color-bg-tertiary);
+            border-radius: 6px;
+            margin-bottom: var(--spacing-sm);
+            border: 1px solid var(--color-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .call-item:hover {
+            background-color: #475569;
+            border-color: var(--color-accent);
+        }
+
+        .call-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .call-lead-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .call-duration {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        .call-agent {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .call-timestamp {
+            font-size: 0.8rem;
+            color: var(--color-accent);
+        }
+
+        .call-meta {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+
+        .call-meta-tag {
+            padding: 2px 8px;
+            background-color: var(--color-bg-primary);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+        }
+
+        .transcription-container {
+            background-color: var(--color-bg-tertiary);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .transcript-line {
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .transcript-line:last-child {
+            border-bottom: none;
+        }
+
+        .speaker-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--color-accent);
+            margin-bottom: 4px;
+        }
+
+        .speaker-agent {
+            color: var(--color-success);
+        }
+
+        .speaker-lead {
+            color: #60a5fa;
+        }
+
+        .transcript-text {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .highlighted-insight {
+            background-color: rgba(59, 130, 246, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #93c5fd;
+            font-weight: 500;
+        }
+
+        .insights-section {
+            background-color: var(--color-bg-tertiary);
+            border-radius: 8px;
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .insight-item {
+            background-color: var(--color-bg-secondary);
+            border-left: 3px solid var(--color-accent);
+            padding: var(--spacing-md);
+            border-radius: 4px;
+        }
+
+        .insight-label {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .insight-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-accent);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--color-text-primary);
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            color: var(--color-text-primary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--color-bg-secondary);
+            border-radius: 8px;
+            padding: var(--spacing-xl);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+            margin-top: var(--spacing-xl);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--color-text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+            opacity: 0.5;
+        }
+
+        .tabs {
+            display: flex;
+            gap: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .tab-button {
+            padding: var(--spacing-md);
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button:hover {
+            color: var(--color-text-primary);
+        }
+
+        .tab-button.active {
+            color: var(--color-accent);
+            border-bottom-color: var(--color-accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .stat-card {
+            background-color: var(--color-bg-tertiary);
+            padding: var(--spacing-md);
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-accent);
+        }
+
+        @media (max-width: 1024px) {
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+                flex-direction: row;
+                overflow-x: auto;
+                padding: var(--spacing-md);
+            }
+
+            .logo {
+                margin-bottom: 0;
+                margin-right: var(--spacing-lg);
+            }
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .top-bar-right {
+                align-self: flex-end;
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: var(--spacing-sm);
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-box input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--color-text-primary);
+            padding: 0 var(--spacing-sm);
+            font-size: 0.95rem;
+        }
+
+        .search-box input::placeholder {
+            color: var(--color-text-secondary);
+        }
+
+        .search-box input:focus {
+            outline: none;
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            padding: var(--spacing-sm);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .action-button:hover {
+            background-color: var(--color-bg-tertiary);
+            color: var(--color-accent);
+        }
+
+        .call-rating {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .star {
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #6b7280;
+            transition: all 0.2s ease;
+        }
+
+        .star:hover {
+            color: var(--color-warning);
+        }
+
+        .star.active {
+            color: var(--color-warning);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">📞 CallFlow</div>
+            <nav class="nav-section">
+                <button class="nav-item active" onclick="switchTab('dashboard')">📊 Dashboard</button>
+                <button class="nav-item" onclick="switchTab('agents')">👥 My Agents</button>
+                <button class="nav-item" onclick="switchTab('calls')">📱 Call Reviews</button>
+                <button class="nav-item" onclick="switchTab('transcripts')">📋 Transcripts</button>
+                <button class="nav-item" onclick="switchTab('analytics')">📈 Analytics</button>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <div class="top-bar">
+                <h1>Sales Manager Dashboard</h1>
+                <div class="top-bar-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search agents, calls, leads...">
+                        <span>🔍</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="openAddAgentModal()">+ Add Agent</button>
+                    <div class="user-profile">
+                        <div class="avatar">SM</div>
+                        <span>Sales Manager</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="content active">
+                <div class="section-title">Overview</div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Agents</div>
+                        <div class="stat-value">8</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Calls Today</div>
+                        <div class="stat-value">147</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Avg. Duration</div>
+                        <div class="stat-value">8m 24s</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Key Matches</div>
+                        <div class="stat-value">23</div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Agent Status</div>
+                        </div>
+                        <div class="agent-item">
+                            <div class="agent-info">
+                                <div class="agent-avatar">JM</div>
+                                <div class="agent-details">
+                                    <div class="agent-name">James Mitchell</div>
+                                    <div class="agent-status">10 calls today • Conversion: 34%</div>
+                                </div>
+                            </div>
+                            <span class="status-badge status-online">Online</span>
+                        </div>
+                        <div class="agent-item">
+                            <div class="agent-info">
+                                <div class="agent-avatar">SH</div>
+                                <div class="agent-details">
+                                    <div class="agent-name">Sarah Hong</div>
+                                    <div class="agent-status">14 calls today • Conversion: 41%</div>
+                                </div>
+                            </div>
+                            <span class="status-badge status-online">Online</span>
+                        </div>
+                        <div class="agent-item">
+                            <div class="agent-info">
+                                <div class="agent-avatar">MK</div>
+                                <div class="agent-details">
+                                    <div class="agent-name">Marcus King</div>
+                                    <div class="agent-status">12 calls today • Conversion: 28%</div>
+                                </div>
+                            </div>
+                            <span class="status-badge status-busy">In Call</span>
+                        </div>
+                        <div class="agent-item">
+                            <div class="agent-info">
+                                <div class="agent-avatar">LP</div>
+                                <div class="agent-details">
+                                    <div class="agent-name">Lisa Park</div>
+                                    <div class="agent-status">9 calls today • Conversion: 36%</div>
+                                </div>
+                            </div>
+                            <span class="status-badge status-online">Online</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Recent Call Insights</div>
+                        </div>
+                        <div class="call-item">
+                            <div class="call-header">
+                                <div class="call-lead-name">Tech Corp LLC</div>
+                                <div class="call-duration">12m 34s</div>
+                            </div>
+                            <div class="call-agent">Agent: Sarah Hong</div>
+                            <div class="call-timestamp">2 minutes ago</div>
+                            <div class="call-meta">
+                                <span class="call-meta-tag">🎯 Key Match: Football fan</span>
+                                <span class="call-meta-tag">✅ Qualified Lead</span>
+                            </div>
+                        </div>
+                        <div class="call-item">
+                            <div class="call-header">
+                                <div class="call-lead-name">Global Ventures</div>
+                                <div class="call-duration">8m 15s</div>
+                            </div>
+                            <div class="call-agent">Agent: James Mitchell</div>
+                            <div class="call-timestamp">28 minutes ago</div>
+                            <div class="call-meta">
+                                <span class="call-meta-tag">🎯 Key Match: Tesla owner</span>
+                                <span class="call-meta-tag">⚠️ Follow-up needed</span>
+                            </div>
+                        </div>
+                        <div class="call-item">
+                            <div class="call-header">
+                                <div class="call-lead-name">Innovation Labs</div>
+                                <div class="call-duration">6m 22s</div>
+                            </div>
+                            <div class="call-agent">Agent: Marcus King</div>
+                            <div class="call-timestamp">1 hour ago</div>
+                            <div class="call-meta">
+                                <span class="call-meta-tag">🎯 Key Match: College alumni</span>
+                                <span class="call-meta-tag">❌ Not interested</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agents Section -->
+            <div id="agents" class="content">
+                <div class="section-title">Manage Agents</div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Sales Team</div>
+                        <button class="btn btn-primary btn-sm" onclick="openAddAgentModal()">+ Add Agent</button>
+                    </div>
+                    <div class="agent-item">
+                        <div class="agent-info">
+                            <div class="agent-avatar">JM</div>
+                            <div class="agent-details">
+                                <div class="agent-name">James Mitchell</div>
+                                <div class="agent-status">james.mitchell@company.com</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-sm);">
+                            <button class="action-button">✏️ Edit</button>
+                            <button class="action-button">📊 Stats</button>
+                            <button class="action-button">🗑️ Remove</button>
+                        </div>
+                    </div>
+                    <div class="agent-item">
+                        <div class="agent-info">
+                            <div class="agent-avatar">SH</div>
+                            <div class="agent-details">
+                                <div class="agent-name">Sarah Hong</div>
+                                <div class="agent-status">sarah.hong@company.com</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-sm);">
+                            <button class="action-button">✏️ Edit</button>
+                            <button class="action-button">📊 Stats</button>
+                            <button class="action-button">🗑️ Remove</button>
+                        </div>
+                    </div>
+                    <div class="agent-item">
+                        <div class="agent-info">
+                            <div class="agent-avatar">MK</div>
+                            <div class="agent-details">
+                                <div class="agent-name">Marcus King</div>
+                                <div class="agent-status">marcus.king@company.com</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-sm);">
+                            <button class="action-button">✏️ Edit</button>
+                            <button class="action-button">📊 Stats</button>
+                            <button class="action-button">🗑️ Remove</button>
+                        </div>
+                    </div>
+                    <div class="agent-item">
+                        <div class="agent-info">
+                            <div class="agent-avatar">LP</div>
+                            <div class="agent-details">
+                                <div class="agent-name">Lisa Park</div>
+                                <div class="agent-status">lisa.park@company.com</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-sm);">
+                            <button class="action-button">✏️ Edit</button>
+                            <button class="action-button">📊 Stats</button>
+                            <button class="action-button">🗑️ Remove</button>
+                        </div>
+                    </div>
+                    <div class="agent-item">
+                        <div class="agent-info">
+                            <div class="agent-avatar">DW</div>
+                            <div class="agent-details">
+                                <div class="agent-name">David Wilson</div>
+                                <div class="agent-status">david.wilson@company.com</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: var(--spacing-sm);">
+                            <button class="action-button">✏️ Edit</button>
+                            <button class="action-button">📊 Stats</button>
+                            <button class="action-button">🗑️ Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calls Section -->
+            <div id="calls" class="content">
+                <div class="section-title">Call Reviews</div>
+                
+                <div class="tabs">
+                    <button class="tab-button active" onclick="switchCallTab('all')">All Calls (23)</button>
+                    <button class="tab-button" onclick="switchCallTab('flagged')">Flagged (5)</button>
+                    <button class="tab-button" onclick="switchCallTab('pending')">Pending Review (8)</button>
+                </div>
+
+                <div id="all-calls" class="tab-content active">
+                    <div class="call-item" onclick="openCallDetail('tech-corp')">
+                        <div class="call-header">
+                            <div>
+                                <div class="call-lead-name">Tech Corp LLC</div>
+                                <div class="call-agent">👤 Sarah Hong</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="call-duration">12m 34s</div>
+                                <div class="call-timestamp">2 min ago</div>
+                            </div>
+                        </div>
+                        <div class="call-meta">
+                            <span class="call-meta-tag">🎯 Sports Fan (Detected)</span>
+                            <span class="call-meta-tag">✅ Qualified</span>
+                            <span class="call-meta-tag">📝 Transcribed</span>
+                        </div>
+                    </div>
+
+                    <div class="call-item" onclick="openCallDetail('global-ventures')">
+                        <div class="call-header">
+                            <div>
+                                <div class="call-lead-name">Global Ventures</div>
+                                <div class="call-agent">👤 James Mitchell</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="call-duration">8m 15s</div>
+                                <div class="call-timestamp">28 min ago</div>
+                            </div>
+                        </div>
+                        <div class="call-meta">
+                            <span class="call-meta-tag">🎯 Tech Enthusiast (Detected)</span>
+                            <span class="call-meta-tag">⏳ Pending</span>
+                            <span class="call-meta-tag">📝 Transcribed</span>
+                        </div>
+                    </div>
+
+                    <div class="call-item" onclick="openCallDetail('innovation-labs')">
+                        <div class="call-header">
+                            <div>
+                                <div class="call-lead-name">Innovation Labs</div>
+                                <div class="call-agent">👤 Marcus King</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="call-duration">6m 22s</div>
+                                <div class="call-timestamp">1h ago</div>
+                            </div>
+                        </div>
+                        <div class="call-meta">
+                            <span class="call-meta-tag">🎯 University Alumni (Detected)</span>
+                            <span class="call-meta-tag">❌ Not Interested</span>
+                            <span class="call-meta-tag">📝 Transcribed</span>
+                        </div>
+                    </div>
+
+                    <div class="call-item" onclick="openCallDetail('nexus-group')">
+                        <div class="call-header">
+                            <div>
+                                <div class="call-lead-name">Nexus Group Inc</div>
+                                <div class="call-agent">👤 Lisa Park</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="call-duration">15m 08s</div>
+                                <div class="call-timestamp">2h ago</div>
+                            </div>
+                        </div>
+                        <div class="call-meta">
+                            <span class="call-meta-tag">🎯 Investor Match (Detected)</span>
+                            <span class="call-meta-tag">✅ Qualified</span>
+                            <span class="call-meta-tag">📝 Transcribed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="flagged-calls" class="tab-content">
+                    <div class="call-item" onclick="openCallDetail('tech-corp')">
+                        <div class="call-header">
+                            <div>
+                                <div class="call-lead-name">Tech Corp LLC</div>
+                                <div class="call-agent">👤 Sarah Hong</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="call-duration">12m 34s</div>
+                                <div class="call-timestamp">2 min ago</div>
+                            </div>
+                        </div>
+                        <div class="call-meta">
+                            <span class="call-meta-tag">⚠️ Flagged: Agent speeding through closing</span>
+                        </div>
+                    </div>
+
+                    <div class="call-item" onclick="openCallDetail('global-ventures')">
+                        <div class="call-header">
+                            <div>
+                                <div class="call-lead-name">Global Ventures</div>
+                                <div class="call-agent">👤 James Mitchell</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="call-duration">8m 15s</div>
+                                <div class="call-timestamp">28 min ago</div>
+                            </div>
+                        </div>
+                        <div class="call-meta">
+                            <span class="call-meta-tag">⚠️ Flagged: Missed rapport opportunity</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pending-calls" class="tab-content">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>No calls pending review</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transcripts Section -->
+            <div id="transcripts" class="content">
+                <div class="section-title">Call Transcripts & Analysis</div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Sample: Tech Corp LLC Call</div>
+                        <span style="color: var(--color-text-secondary); font-size: 0.85rem;">2 min ago</span>
+                    </div>
+
+                    <div class="transcription-container">
+                        <div class="transcript-line">
+                            <div class="speaker-label speaker-agent">👤 Agent (Sarah Hong)</div>
+                            <div class="transcript-text">Hi there! Thanks for picking up. I'm Sarah from CallFlow. I noticed you're in the tech industry. Have you had a chance to look at our solutions for streamlining your sales process?</div>
+                        </div>
+
+                        <div class="transcript-line">
+                            <div class="speaker-label speaker-lead">👤 Lead (Tom Bradley, Tech Corp)</div>
+                            <div class="transcript-text">Oh yeah, hi Sarah. We have been looking at a few options. Actually, I'm glad you called. We've been struggling with call quality on our end.</div>
+                        </div>
+
+                        <div class="transcript-line">
+                            <div class="speaker-label speaker-agent">👤 Agent (Sarah Hong)</div>
+                            <div class="transcript-text">That's exactly what we help with! Before I dive in, I wanted to ask - are you a sports fan by chance? I noticed your office has some great memorabilia behind you during that video call we had last week.</div>
+                        </div>
+
+                        <div class="transcript-line">
+                            <div class="speaker-label speaker-lead">👤 Lead (Tom Bradley, Tech Corp)</div>
+                            <div class="transcript-text">Ha! Yeah, actually I'm a huge Lakers fan. Been following them forever. How did you—oh right, the video call. <span class="highlighted-insight">Yeah, I love basketball</span>. You catch games?</div>
+                        </div>
+
+                        <div class="transcript-line">
+                            <div class="speaker-label speaker-agent">👤 Agent (Sarah Hong)</div>
+                            <div class="transcript-text">I do! <span class="highlighted-insight">Lakers are incredible this season</span>. But more importantly, I just matched you with David Wilson on our team - he's a huge basketball fan too and very familiar with your tech stack. Would it make sense to loop him in on a follow-up call?</div>
+                        </div>
+
+                        <div class="transcript-line">
+                            <div class="speaker-label speaker-lead">👤 Lead (Tom Bradley, Tech Corp)</div>
+                            <div class="transcript-text">Oh interesting! Yeah, that would be great actually. Having someone I can relate to makes a big difference in these conversations.</div>
+                        </div>
+                    </div>
+
+                    <div class="insights-section">
+                        <div style="font-weight: 600; margin-bottom: var(--spacing-md);">🎯 Key Insights Detected</div>
+                        <div class="insights-grid">
+                            <div class="insight-item">
+                                <div class="insight-label">Commonality Match</div>
+                                <div class="insight-value">🏀 Sports Fan (Basketball)</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-label">Matched Agent</div>
+                                <div class="insight-value">David Wilson</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-label">Transfer Probability</div>
+                                <div class="insight-value">94%</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-label">Lead Quality</div>
+                                <div class="insight-value">High</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: var(--spacing-lg);">
+                        <button class="btn btn-primary">✉️ Send Transfer Suggestion to David</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analytics" class="content">
+                <div class="section-title">Team Analytics</div>
+                
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">Conversion by Agent</div>
+                        <div style="margin-top: var(--spacing-lg);">
+                            <div style="margin-bottom: var(--spacing-lg);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                    <span>Sarah Hong</span>
+                                    <span style="color: var(--color-success);">41%</span>
+                                </div>
+                                <div style="background: var(--color-bg-tertiary); height: 8px; border-radius: 4px; overflow: hidden;">
+                                    <div style="background: var(--color-success); height: 100%; width: 41%;"></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: var(--spacing-lg);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                    <span>James Mitchell</span>
+                                    <span style="color: var(--color-accent);">34%</span>
+                                </div>
+                                <div style="background: var(--color-bg-tertiary); height: 8px; border-radius: 4px; overflow: hidden;">
+                                    <div style="background: var(--color-accent); height: 100%; width: 34%;"></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: var(--spacing-lg);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                    <span>Lisa Park</span>
+                                    <span style="color: var(--color-accent);">36%</span>
+                                </div>
+                                <div style="background: var(--color-bg-tertiary); height: 8px; border-radius: 4px; overflow: hidden;">
+                                    <div style="background: var(--color-accent); height: 100%; width: 36%;"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                    <span>Marcus King</span>
+                                    <span style="color: var(--color-warning);">28%</span>
+                                </div>
+                                <div style="background: var(--color-bg-tertiary); height: 8px; border-radius: 4px; overflow: hidden;">
+                                    <div style="background: var(--color-warning); height: 100%; width: 28%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Key Match Success Rate</div>
+                        <div style="margin-top: var(--spacing-lg);">
+                            <div style="margin-bottom: var(--spacing-lg);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                    <span>Sports/Hobbies</span>
+                                    <span style="color: var(--color-success);">78%</span>
+                                </div>
+                                <div style="background: var(--color-bg-tertiary); height: 8px; border-radius: 4px; overflow: hidden;">
+                                    <div style="background: var(--color-success); height: 100%; width: 78%;"></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: var(--spacing-lg);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                    <span>Education/Background</span>
+                                    <span style="color: var(--color-accent);">62%</span>
+                                </div>
+                                <div style="background: var(--color-bg-tertiary); height: 8px; border-radius: 4px; overflow: hidden;">
+                                    <div style="background: var(--color-accent); height: 100%; width: 62%;"></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: var(--spacing-lg);">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                    <span>Tech/Industry</span>
+                                    <span style="color: var(--color-accent);">71%</span>
+                                </div>
+                                <div style="background: var(--color-bg-tertiary); height: 8px; border-radius: 4px; overflow: hidden;">
+                                    <div style="background: var(--color-accent); height: 100%; width: 71%;"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                    <span>Company/Network</span>
+                                    <span style="color: var(--color-warning);">45%</span>
+                                </div>
+                                <div style="background: var(--color-bg-tertiary); height: 8px; border-radius: 4px; overflow: hidden;">
+                                    <div style="background: var(--color-warning); height: 100%; width: 45%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Transfer Recommendations (Last 7 Days)</div>
+                    <div style="margin-top: var(--spacing-lg);">
+                        <div class="agent-item">
+                            <div class="agent-info">
+                                <div class="agent-avatar">DW</div>
+                                <div class="agent-details">
+                                    <div class="agent-name">David Wilson - Basketball Fan</div>
+                                    <div class="agent-status">3 successful matches, 14 pending recommendations</div>
+                                </div>
+                            </div>
+                            <span class="status-badge status-online">Active</span>
+                        </div>
+                        <div class="agent-item">
+                            <div class="agent-info">
+                                <div class="agent-avatar">EN</div>
+                                <div class="agent-details">
+                                    <div class="agent-name">Emma Nelson - AI/ML Expert</div>
+                                    <div class="agent-status">2 successful matches, 8 pending recommendations</div>
+                                </div>
+                            </div>
+                            <span class="status-badge status-online">Active</span>
+                        </div>
+                        <div class="agent-item">
+                            <div class="agent-info">
+                                <div class="agent-avatar">RC</div>
+                                <div class="agent-details">
+                                    <div class="agent-name">Robert Chen - Stanford Alumni</div>
+                                    <div class="agent-status">1 successful match, 5 pending recommendations</div>
+                                </div>
+                            </div>
+                            <span class="status-badge status-online">Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Agent Modal -->
+    <div id="addAgentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Add New Sales Agent</div>
+            
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" placeholder="e.g., John Smith">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" placeholder="john.smith@company.com">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-input" placeholder="+1 (555) 123-4567">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Key Interests/Commonalities</label>
+                <input type="text" class="form-input" placeholder="e.g., Basketball, Tesla, Stanford grad">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Team Assignment</label>
+                <select class="form-input">
+                    <option>Enterprise Team</option>
+                    <option>Mid-Market Team</option>
+                    <option>SMB Team</option>
+                </select>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeAddAgentModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="addAgent()">Create Agent</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call Detail Modal -->
+    <div id="callDetailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Call Details & Quality Review</div>
+            
+            <div style="margin-bottom: var(--spacing-lg);">
+                <div style="background: var(--color-bg-tertiary); padding: var(--spacing-md); border-radius: 6px; margin-bottom: var(--spacing-md);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600; font-size: 1.1rem;">Tech Corp LLC</div>
+                            <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-top: 4px;">Caller: Tom Bradley | Agent: Sarah Hong</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.3rem; font-weight: 700; color: var(--color-accent);">12m 34s</div>
+                            <div style="font-size: 0.85rem; color: var(--color-text-secondary);">2 min ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <label class="form-label">Call Quality Rating</label>
+                    <div class="call-rating">
+                        <span class="star active" onclick="rateStar(1)">⭐</span>
+                        <span class="star active" onclick="rateStar(2)">⭐</span>
+                        <span class="star active" onclick="rateStar(3)">⭐</span>
+                        <span class="star active" onclick="rateStar(4)">⭐</span>
+                        <span class="star" onclick="rateStar(5)">⭐</span>
+                    </div>
+                    <div style="color: var(--color-text-secondary); font-size: 0.85rem; margin-top: 6px;">4 out of 5 - Excellent rapport</div>
+                </div>
+
+                <div style="background: var(--color-bg-tertiary); padding: var(--spacing-md); border-radius: 6px; border-left: 3px solid var(--color-success);">
+                    <div style="font-weight: 600; margin-bottom: 8px; color: var(--color-success);">✅ Key Insights Found</div>
+                    <div style="font-size: 0.9rem;">Sports Fan Match (Basketball) detected and leveraged for rapport. Transfer recommendation: David Wilson (94% confidence)</div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeCallDetailModal()">Close</button>
+                <button class="btn btn-primary">💾 Save Notes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all content sections
+            document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            // Show selected section
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function switchCallTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+
+            document.getElementById(tabName + '-calls').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function openAddAgentModal() {
+            document.getElementById('addAgentModal').classList.add('active');
+        }
+
+        function closeAddAgentModal() {
+            document.getElementById('addAgentModal').classList.remove('active');
+        }
+
+        function openCallDetail(callId) {
+            document.getElementById('callDetailModal').classList.add('active');
+        }
+
+        function closeCallDetailModal() {
+            document.getElementById('callDetailModal').classList.remove('active');
+        }
+
+        function addAgent() {
+            alert('Agent added successfully! (Frontend demo)');
+            closeAddAgentModal();
+        }
+
+        function rateStar(rating) {
+            document.querySelectorAll('.call-rating .star').forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // Close modals when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
