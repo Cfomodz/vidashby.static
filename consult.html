@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automation Workflow Consult Request</title>
+    <style>
+        :root {
+            --bg: #0b1020;
+            --bg-alt: #111827;
+            --card: #121a33;
+            --card-border: #24304f;
+            --text: #f8fafc;
+            --text-muted: #9aa4b2;
+            --accent: #5eead4;
+            --accent-strong: #22d3ee;
+            --danger: #fca5a5;
+            --shadow: 0 20px 40px rgba(7, 11, 24, 0.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: radial-gradient(circle at top, #111c38 0%, #0b1020 55%, #080c18 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .shell {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 32px 24px;
+        }
+
+        .topbar {
+            max-width: 960px;
+            width: 100%;
+            margin: 0 auto 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .brand {
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+
+        .progress-wrap {
+            background: rgba(8, 12, 24, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .save-status {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .save-status.saving {
+            color: var(--text-muted);
+        }
+
+        .save-status.error {
+            color: var(--danger);
+        }
+
+        .progress-bar {
+            background: #0f172a;
+            border-radius: 999px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+            transition: width 0.4s ease;
+        }
+
+        .card {
+            max-width: 960px;
+            width: 100%;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 48px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 2.4vw, 2.8rem);
+            line-height: 1.2;
+        }
+
+        .helper {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 700px;
+        }
+
+        .input-area {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .text-input,
+        .text-area {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid #24304f;
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 1rem;
+            color: var(--text);
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .text-input:focus,
+        .text-area:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.2);
+        }
+
+        .text-area {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .option {
+            padding: 14px 16px;
+            background: #0f172a;
+            border: 1px solid #24304f;
+            border-radius: 12px;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            transition: border 0.2s ease, transform 0.2s ease;
+            font-size: 0.98rem;
+        }
+
+        .option:hover {
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .option.selected {
+            border-color: var(--accent-strong);
+            background: rgba(34, 211, 238, 0.12);
+        }
+
+        .error {
+            color: var(--danger);
+            font-size: 0.95rem;
+            min-height: 20px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 999px;
+            padding: 12px 26px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .btn.primary {
+            background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+            color: #0b1020;
+            font-weight: 700;
+        }
+
+        .btn.primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn.primary:not(:disabled):hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(34, 211, 238, 0.25);
+        }
+
+        .btn.ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--card-border);
+        }
+
+        .tip {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer {
+            margin-top: auto;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            padding: 32px 0 12px;
+        }
+
+        .summary {
+            background: #0f172a;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .summary-line {
+            margin-bottom: 6px;
+        }
+
+        .summary-line:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 720px) {
+            .card {
+                padding: 28px;
+            }
+
+            .option-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <header class="topbar">
+            <div class="brand">Automation Consult</div>
+            <div class="progress-wrap">
+                <div class="progress-meta">
+                    <span id="progressText">Intro</span>
+                    <span class="save-status" id="saveStatus">Not saved</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="card" aria-live="polite">
+            <div class="step-label" id="stepLabel">Welcome</div>
+            <h1 id="question"></h1>
+            <p class="helper" id="helperText"></p>
+            <div class="input-area" id="inputArea"></div>
+            <div class="error" id="errorText" role="alert"></div>
+            <div class="actions">
+                <button class="btn ghost" id="backBtn" type="button">Back</button>
+                <button class="btn primary" id="nextBtn" type="button">Next</button>
+            </div>
+            <div class="tip" id="tipText">Press Enter to continue</div>
+        </main>
+
+        <footer class="footer">
+            Each step is saved to an external intake API for safe keeping.
+        </footer>
+    </div>
+
+    <script>
+        const API_URL = "https://example.com/api/consult-intake";
+        const STORAGE_KEY = "automation_consult_draft_v1";
+
+        const steps = [
+            {
+                id: "intro",
+                type: "intro",
+                title: "Automation workflow consult request",
+                description: "Answer a few quick questions so we can scope the right workflow. We save each step as you go."
+            },
+            {
+                id: "full_name",
+                type: "text",
+                question: "What is your full name?",
+                placeholder: "Jane Doe",
+                required: true,
+                autocomplete: "name"
+            },
+            {
+                id: "email",
+                type: "email",
+                question: "What is the best email to reach you?",
+                placeholder: "jane@company.com",
+                required: true,
+                autocomplete: "email"
+            },
+            {
+                id: "company",
+                type: "text",
+                question: "Company or organization name?",
+                placeholder: "Acme Co",
+                required: true,
+                autocomplete: "organization"
+            },
+            {
+                id: "role",
+                type: "text",
+                question: "Your role or team?",
+                placeholder: "Operations Lead",
+                helper: "Optional",
+                required: false
+            },
+            {
+                id: "automation_goal",
+                type: "textarea",
+                question: "What would you like to automate?",
+                placeholder: "Lead capture, onboarding, invoicing, reporting, and more.",
+                required: true
+            },
+            {
+                id: "current_stack",
+                type: "multiselect",
+                question: "Which tools are in your stack today?",
+                helper: "Select all that apply.",
+                options: [
+                    "n8n",
+                    "Zapier",
+                    "Make",
+                    "HubSpot",
+                    "Salesforce",
+                    "Airtable",
+                    "Notion",
+                    "Slack",
+                    "Google Workspace",
+                    "Custom API",
+                    "Other"
+                ],
+                required: true
+            },
+            {
+                id: "volume",
+                type: "select",
+                question: "Approximate monthly volume?",
+                helper: "A rough estimate is fine.",
+                options: [
+                    "Less than 100",
+                    "100 to 1,000",
+                    "1,000 to 10,000",
+                    "10,000+",
+                    "Not sure yet"
+                ],
+                required: true
+            },
+            {
+                id: "timeline",
+                type: "select",
+                question: "When do you want this live?",
+                options: [
+                    "ASAP (0-2 weeks)",
+                    "This month",
+                    "Next 1-3 months",
+                    "This quarter",
+                    "Flexible"
+                ],
+                required: true
+            },
+            {
+                id: "budget",
+                type: "select",
+                question: "Estimated monthly automation budget?",
+                helper: "Include tooling and ops, if known.",
+                options: [
+                    "Under $1k",
+                    "$1k to $5k",
+                    "$5k to $15k",
+                    "$15k+",
+                    "Not sure yet"
+                ],
+                required: true
+            },
+            {
+                id: "followup",
+                type: "radio",
+                question: "Preferred follow up channel?",
+                options: [
+                    "Email",
+                    "Phone",
+                    "Either"
+                ],
+                required: true
+            },
+            {
+                id: "phone",
+                type: "text",
+                question: "Best phone number for a call",
+                placeholder: "+1 (555) 123-4567",
+                required: false,
+                autocomplete: "tel",
+                when: (data) => ["Phone", "Either"].includes(data.followup || "")
+            },
+            {
+                id: "notes",
+                type: "textarea",
+                question: "Anything else we should know?",
+                helper: "Compliance constraints, success metrics, or deadlines.",
+                placeholder: "Optional",
+                required: false
+            },
+            {
+                id: "complete",
+                type: "complete",
+                title: "Thanks for the details",
+                description: "Your responses were saved after each step. We will follow up shortly."
+            }
+        ];
+
+        const stepLabelEl = document.getElementById("stepLabel");
+        const questionEl = document.getElementById("question");
+        const helperTextEl = document.getElementById("helperText");
+        const inputAreaEl = document.getElementById("inputArea");
+        const errorTextEl = document.getElementById("errorText");
+        const tipTextEl = document.getElementById("tipText");
+        const progressTextEl = document.getElementById("progressText");
+        const progressFillEl = document.getElementById("progressFill");
+        const saveStatusEl = document.getElementById("saveStatus");
+        const backBtn = document.getElementById("backBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        let formData = {};
+        let stepIndex = 0;
+        let sessionId = createSessionId();
+
+        loadDraft();
+        renderStep();
+
+        nextBtn.addEventListener("click", handleNext);
+        backBtn.addEventListener("click", handleBack);
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter") {
+                return;
+            }
+
+            const active = document.activeElement;
+            if (active && active.tagName === "TEXTAREA") {
+                return;
+            }
+
+            event.preventDefault();
+            handleNext();
+        });
+
+        window.addEventListener("beforeunload", () => {
+            if (!API_URL) {
+                return;
+            }
+
+            try {
+                const payload = JSON.stringify({
+                    sessionId,
+                    stepId: "page_unload",
+                    timestamp: new Date().toISOString(),
+                    data: formData,
+                    source: "consult.html"
+                });
+
+                navigator.sendBeacon(API_URL, new Blob([payload], { type: "application/json" }));
+            } catch (error) {
+                // Ignore beacon errors
+            }
+        });
+
+        function createSessionId() {
+            if (window.crypto && window.crypto.randomUUID) {
+                return window.crypto.randomUUID();
+            }
+            return `session_${Math.random().toString(36).slice(2, 10)}`;
+        }
+
+        function loadDraft() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                if (!saved) {
+                    return;
+                }
+                formData = saved.formData || {};
+                stepIndex = saved.stepIndex || 0;
+                sessionId = saved.sessionId || sessionId;
+                setSaveStatus("Draft restored", "saving");
+            } catch (error) {
+                // Ignore storage errors
+            }
+        }
+
+        function persistDraft() {
+            try {
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify({ formData, stepIndex, sessionId })
+                );
+            } catch (error) {
+                // Ignore storage errors
+            }
+        }
+
+        function getVisibleSteps() {
+            return steps.filter((step) => !step.when || step.when(formData));
+        }
+
+        function renderStep() {
+            const visibleSteps = getVisibleSteps();
+            if (!visibleSteps.length) {
+                return;
+            }
+
+            stepIndex = Math.min(Math.max(stepIndex, 0), visibleSteps.length - 1);
+            const step = visibleSteps[stepIndex];
+
+            updateProgress(visibleSteps, step);
+            updateButtons(visibleSteps, step);
+            updateTip(step);
+            errorTextEl.textContent = "";
+
+            stepLabelEl.textContent = getStepLabel(visibleSteps, step);
+            questionEl.textContent = step.question || step.title || "";
+            helperTextEl.textContent = step.description || step.helper || "";
+
+            inputAreaEl.innerHTML = "";
+
+            if (step.type === "intro") {
+                const intro = document.createElement("div");
+                intro.className = "summary";
+                intro.textContent = "This short intake helps us design the right automation workflow and scope. You can pause and resume at any time.";
+                inputAreaEl.appendChild(intro);
+                updateNextState(step);
+                return;
+            }
+
+            if (step.type === "complete") {
+                const summary = buildSummary();
+                inputAreaEl.appendChild(summary);
+                updateNextState(step);
+                return;
+            }
+
+            renderInput(step);
+            updateNextState(step);
+        }
+
+        function renderInput(step) {
+            if (step.type === "text" || step.type === "email") {
+                const input = document.createElement("input");
+                input.type = step.type;
+                input.className = "text-input";
+                input.placeholder = step.placeholder || "";
+                input.value = formData[step.id] || "";
+                input.autocomplete = step.autocomplete || "off";
+                input.addEventListener("input", () => {
+                    setValue(step, input.value);
+                });
+                input.addEventListener("blur", () => {
+                    queueSave(step);
+                });
+                inputAreaEl.appendChild(input);
+                input.focus();
+                return;
+            }
+
+            if (step.type === "textarea") {
+                const textarea = document.createElement("textarea");
+                textarea.className = "text-area";
+                textarea.placeholder = step.placeholder || "";
+                textarea.value = formData[step.id] || "";
+                textarea.addEventListener("input", () => {
+                    setValue(step, textarea.value);
+                });
+                textarea.addEventListener("blur", () => {
+                    queueSave(step);
+                });
+                inputAreaEl.appendChild(textarea);
+                textarea.focus();
+                return;
+            }
+
+            if (step.type === "select" || step.type === "radio") {
+                const grid = buildOptions(step, false);
+                inputAreaEl.appendChild(grid);
+                return;
+            }
+
+            if (step.type === "multiselect") {
+                const grid = buildOptions(step, true);
+                inputAreaEl.appendChild(grid);
+            }
+        }
+
+        function buildOptions(step, isMulti) {
+            const grid = document.createElement("div");
+            grid.className = "option-grid";
+            const selectedValues = new Set(
+                Array.isArray(formData[step.id]) ? formData[step.id] : []
+            );
+
+            step.options.forEach((option) => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "option";
+                button.textContent = option;
+
+                if (isMulti && selectedValues.has(option)) {
+                    button.classList.add("selected");
+                }
+
+                if (!isMulti && formData[step.id] === option) {
+                    button.classList.add("selected");
+                }
+
+                button.addEventListener("click", () => {
+                    if (isMulti) {
+                        if (selectedValues.has(option)) {
+                            selectedValues.delete(option);
+                            button.classList.remove("selected");
+                        } else {
+                            selectedValues.add(option);
+                            button.classList.add("selected");
+                        }
+                        setValue(step, Array.from(selectedValues));
+                    } else {
+                        formData[step.id] = option;
+                        grid.querySelectorAll(".option").forEach((btn) => {
+                            btn.classList.toggle("selected", btn === button);
+                        });
+                        setValue(step, option);
+                    }
+                });
+
+                grid.appendChild(button);
+            });
+
+            return grid;
+        }
+
+        function getStepLabel(visibleSteps, step) {
+            if (step.type === "intro") {
+                return "Welcome";
+            }
+
+            if (step.type === "complete") {
+                return "All set";
+            }
+
+            const questionSteps = visibleSteps.filter((item) => !isMetaStep(item));
+            const questionIndex = questionSteps.findIndex((item) => item.id === step.id) + 1;
+            return `Question ${questionIndex} of ${questionSteps.length}`;
+        }
+
+        function updateProgress(visibleSteps, step) {
+            const questionSteps = visibleSteps.filter((item) => !isMetaStep(item));
+            const total = questionSteps.length;
+
+            if (step.type === "intro") {
+                progressTextEl.textContent = "Intro";
+                progressFillEl.style.width = "0%";
+                return;
+            }
+
+            if (step.type === "complete") {
+                progressTextEl.textContent = "Complete";
+                progressFillEl.style.width = "100%";
+                return;
+            }
+
+            const index = questionSteps.findIndex((item) => item.id === step.id) + 1;
+            const percent = total ? Math.round((index / total) * 100) : 0;
+            progressTextEl.textContent = `Step ${index} of ${total}`;
+            progressFillEl.style.width = `${percent}%`;
+        }
+
+        function updateButtons(visibleSteps, step) {
+            backBtn.style.visibility = stepIndex === 0 ? "hidden" : "visible";
+            backBtn.textContent = "Back";
+            nextBtn.style.display = "inline-flex";
+            nextBtn.textContent = "Next";
+
+            if (step.type === "intro") {
+                nextBtn.textContent = "Start";
+            } else if (step.type === "complete") {
+                nextBtn.style.display = "none";
+                backBtn.textContent = "Edit responses";
+            } else if (stepIndex === visibleSteps.length - 2 && visibleSteps[visibleSteps.length - 1].type === "complete") {
+                nextBtn.textContent = "Submit";
+            }
+        }
+
+        function updateTip(step) {
+            if (step.type === "multiselect") {
+                tipTextEl.textContent = "Select all that apply, then continue.";
+                return;
+            }
+
+            if (step.type === "complete") {
+                tipTextEl.textContent = "You can go back to adjust answers.";
+                return;
+            }
+
+            tipTextEl.textContent = "Press Enter to continue";
+        }
+
+        function updateNextState(step) {
+            if (step.type === "intro" || step.type === "complete") {
+                nextBtn.disabled = false;
+                return;
+            }
+
+            nextBtn.disabled = !isValueValid(step, formData[step.id]);
+        }
+
+        function isValueValid(step, value) {
+            if (!step.required) {
+                return true;
+            }
+
+            if (step.type === "multiselect") {
+                return Array.isArray(value) && value.length > 0;
+            }
+
+            if (step.type === "email") {
+                if (!value || !value.trim()) {
+                    return false;
+                }
+                return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value.trim());
+            }
+
+            if (typeof value === "string") {
+                return value.trim().length > 0;
+            }
+
+            return Boolean(value);
+        }
+
+        function handleNext() {
+            const visibleSteps = getVisibleSteps();
+            const step = visibleSteps[stepIndex];
+
+            if (step.type === "intro") {
+                stepIndex += 1;
+                persistDraft();
+                renderStep();
+                return;
+            }
+
+            if (step.type === "complete") {
+                return;
+            }
+
+            if (!isValueValid(step, formData[step.id])) {
+                errorTextEl.textContent = step.type === "email"
+                    ? "Please enter a valid email address."
+                    : "Please answer before continuing.";
+                return;
+            }
+
+            queueSave(step);
+            stepIndex = Math.min(stepIndex + 1, visibleSteps.length - 1);
+            persistDraft();
+            renderStep();
+        }
+
+        function handleBack() {
+            stepIndex = Math.max(stepIndex - 1, 0);
+            persistDraft();
+            renderStep();
+        }
+
+        function setValue(step, value) {
+            formData[step.id] = value;
+            persistDraft();
+            updateNextState(step);
+        }
+
+        function queueSave(step) {
+            if (!API_URL || step.type === "intro" || step.type === "complete") {
+                return;
+            }
+
+            const payload = {
+                sessionId,
+                stepId: step.id,
+                timestamp: new Date().toISOString(),
+                data: formData,
+                source: "consult.html"
+            };
+
+            setSaveStatus("Saving...", "saving");
+
+            fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload),
+                keepalive: true
+            })
+                .then(() => {
+                    setSaveStatus("Saved", "saved");
+                })
+                .catch(() => {
+                    setSaveStatus("Save failed", "error");
+                });
+        }
+
+        function setSaveStatus(text, state) {
+            saveStatusEl.textContent = text;
+            saveStatusEl.classList.remove("saving", "error");
+            if (state === "saving") {
+                saveStatusEl.classList.add("saving");
+            }
+            if (state === "error") {
+                saveStatusEl.classList.add("error");
+            }
+        }
+
+        function buildSummary() {
+            const summary = document.createElement("div");
+            summary.className = "summary";
+
+            const lines = [
+                `Session ID: ${sessionId}`,
+                `Name: ${formData.full_name || "Not provided"}`,
+                `Email: ${formData.email || "Not provided"}`,
+                `Company: ${formData.company || "Not provided"}`,
+                `Primary goal: ${(formData.automation_goal || "").slice(0, 90) || "Not provided"}`
+            ];
+
+            lines.forEach((line) => {
+                const item = document.createElement("div");
+                item.className = "summary-line";
+                item.textContent = line;
+                summary.appendChild(item);
+            });
+
+            return summary;
+        }
+
+        function isMetaStep(step) {
+            return step.type === "intro" || step.type === "complete";
+        }
+    </script>
+</body>
+</html>
