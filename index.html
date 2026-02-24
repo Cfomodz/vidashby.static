@@ -3,237 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David Ashby - Automation & Security</title>
+    <title>David Ashby</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #000;
-            color: #e4e4e4;
+            font-family: 'Helvetica Neue', -apple-system, sans-serif;
+            background: #000;
+            color: #ccc;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        .page-wrapper {
+        .page {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 3rem 1.5rem;
+            padding: 4rem 2rem;
         }
 
-        .headline {
+        .brand {
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 4rem;
         }
 
-        .headline h1 {
-            font-size: 2rem;
-            font-weight: 700;
+        .brand h1 {
+            font-size: 1.4rem;
+            font-weight: 300;
             color: #fff;
-            line-height: 1.3;
-        }
-
-        .headline p {
-            font-size: 1.1rem;
-            color: #999;
-            margin-top: 0.75rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cards-container {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            max-width: 1000px;
-            width: 100%;
-            margin-top: 3rem;
-        }
-
-        .offer-card {
-            flex: 1;
-            max-width: 320px;
-            background: #111;
-            border: 2px solid #222;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: border-color 0.3s, transform 0.3s;
-        }
-
-        .offer-card:hover {
-            border-color: #444;
-            transform: translateY(-4px);
-        }
-
-        .card-image {
-            width: 100%;
-            height: 180px;
-            background: #1a1a1a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            border-bottom: 1px solid #222;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .card-body h2 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.75rem;
-            line-height: 1.3;
-        }
-
-        .card-body p {
-            font-size: 0.95rem;
-            color: #999;
-            line-height: 1.6;
-            margin-bottom: 1.25rem;
-        }
-
-        .card-meta {
-            font-size: 0.8rem;
-            color: #666;
-            margin-bottom: 1.25rem;
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .card-meta span {
-            background: #1a1a1a;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-        }
-
-        .card-cta {
-            display: block;
-            width: 100%;
-            padding: 0.85rem 1.5rem;
-            background: #ee4733;
-            color: #fff;
-            text-decoration: none;
-            text-align: center;
-            font-size: 0.95rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            border-radius: 6px;
-            transition: background 0.3s, transform 0.2s;
+            letter-spacing: 0.35em;
             text-transform: uppercase;
         }
 
-        .card-cta:hover {
-            background: #d63a28;
-            transform: scale(1.02);
+        .brand p {
+            font-size: 0.85rem;
+            color: #555;
+            margin-top: 0.75rem;
+            letter-spacing: 0.15em;
         }
 
-        .card-cta.green {
-            background: #00c853;
+        .paths {
+            display: flex;
+            gap: 1.5rem;
+            max-width: 680px;
+            width: 100%;
         }
 
-        .card-cta.green:hover {
-            background: #00a844;
+        .path-card {
+            flex: 1;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: border-color 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .path-card:hover {
+            border-color: #333;
+        }
+
+        .path-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #444;
+            margin-bottom: 1.25rem;
+        }
+
+        .path-card h2 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #fff;
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+        }
+
+        .path-card p {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            flex: 1;
+        }
+
+        .path-cta {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .path-cta.primary {
+            background: #fff;
+            color: #000;
+        }
+
+        .path-cta.primary:hover {
+            background: #e0e0e0;
+        }
+
+        .path-cta.secondary {
+            background: transparent;
+            color: #999;
+            border: 1px solid #333;
+        }
+
+        .path-cta.secondary:hover {
+            border-color: #555;
+            color: #fff;
         }
 
         footer {
             text-align: center;
-            padding: 2rem 1rem;
-            border-top: 1px solid #1a1a1a;
+            padding: 2rem;
+            border-top: 1px solid #111;
         }
 
-        .footer-links {
+        .foot-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
         }
 
-        .footer-links a {
-            color: #555;
+        .foot-links a {
+            color: #333;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
             transition: color 0.3s;
         }
 
-        .footer-links a:hover {
-            color: #999;
-        }
+        .foot-links a:hover { color: #777; }
 
-        @media (max-width: 768px) {
-            .cards-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .offer-card {
-                max-width: 400px;
-                width: 100%;
-            }
-
-            .headline h1 {
-                font-size: 1.6rem;
-            }
+        @media (max-width: 600px) {
+            .paths { flex-direction: column; }
+            .path-card { padding: 2rem 1.5rem; }
+            .brand h1 { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <div class="headline">
-            <h1>How To Make Money With n8n & AI Automation</h1>
-            <p>Learn how to build, sell, and scale automation workflows from the #1 n8n creator</p>
+    <div class="page">
+        <div class="brand">
+            <h1>David Ashby</h1>
+            <p>n8n &middot; Automation &middot; AI</p>
         </div>
 
-        <div class="cards-container">
-            <!-- Free Community -->
-            <div class="offer-card">
-                <div class="card-image">
-                    <span>&#9881;</span>
-                </div>
-                <div class="card-body">
-                    <h2>(n8n) Nodes Automation Lab</h2>
-                    <p>Free community where 500+ people learn automation principles, collaborate on workflows, and access a growing template library</p>
-                    <div class="card-meta">
-                        <span>Public</span>
-                        <span>511+ Members</span>
-                        <span>Free</span>
-                    </div>
-                    <a href="https://www.skool.com/n8n-nodes-automation-lab-1570" class="card-cta green" target="_blank">Join Free Community</a>
-                </div>
+        <div class="paths">
+            <div class="path-card">
+                <div class="path-label">Free Community</div>
+                <h2>Nodes Automation Lab</h2>
+                <p>500+ members learning automation fundamentals and sharing workflows</p>
+                <a href="https://www.skool.com/n8n-nodes-automation-lab-1570" class="path-cta secondary" target="_blank">Join Free</a>
             </div>
 
-            <!-- Paid Community -->
-            <div class="offer-card">
-                <div class="card-image">
-                    <span>&#9889;</span>
-                </div>
-                <div class="card-body">
-                    <h2>Beyond Nodes Automation Lab</h2>
-                    <p>Advanced strategies for making money with n8n & AI automation from the #1 ranked creator on the platform</p>
-                    <div class="card-meta">
-                        <span>Private</span>
-                        <span>99 Members</span>
-                        <span>Paid</span>
-                    </div>
-                    <a href="start.html" class="card-cta">Learn More</a>
-                </div>
+            <div class="path-card">
+                <div class="path-label">Beyond Nodes</div>
+                <h2>Build a Business With Automation</h2>
+                <p>The system behind $5K+ in workflow sales and 200+ published templates</p>
+                <a href="start.html" class="path-cta primary">Get Started</a>
             </div>
         </div>
     </div>
 
     <footer>
-        <div class="footer-links">
+        <div class="foot-links">
             <a href="https://www.linkedin.com/in/david-ashby/" target="_blank">LinkedIn</a>
             <a href="https://github.com/Cfomodz" target="_blank">GitHub</a>
             <a href="https://n8n.io/creators/" target="_blank">n8n</a>

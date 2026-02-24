@@ -3,198 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beyond Nodes Automation Lab - David Ashby</title>
+    <title>Beyond Nodes &mdash; David Ashby</title>
     <style>
         :root {
             --bg: #000;
-            --bg-section: #0a0a0a;
-            --bg-card: #111;
-            --border: #222;
-            --text: #e4e4e4;
-            --text-muted: #999;
-            --text-dim: #666;
-            --accent: #ee4733;
-            --accent-hover: #d63a28;
-            --green: #00c853;
-            --cyan: #00d4ff;
+            --bg-alt: #060606;
+            --card: #0c0c0c;
+            --border: #1a1a1a;
+            --text: #bbb;
+            --dim: #555;
+            --white: #f0f0f0;
+            --accent: #c44;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg);
+            font-family: 'Helvetica Neue', -apple-system, sans-serif;
+            background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
-        /* ===== NAV ===== */
+        /* NAV */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(12px);
-            padding: 1rem 2rem;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(16px);
+            padding: 1.25rem 2rem;
             z-index: 1000;
             border-bottom: 1px solid var(--border);
         }
 
-        nav .nav-inner {
-            max-width: 1100px;
+        .nav-inner {
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        nav .logo {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #fff;
+        .logo {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #666;
             text-decoration: none;
-        }
-
-        nav .nav-cta {
-            padding: 0.5rem 1.25rem;
-            background: var(--accent);
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-radius: 5px;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background 0.3s;
         }
 
-        nav .nav-cta:hover {
-            background: var(--accent-hover);
+        .nav-cta {
+            padding: 0.5rem 1.25rem;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border-radius: 3px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
         }
 
-        /* ===== HERO ===== */
+        .nav-cta:hover { opacity: 0.85; }
+
+        /* HERO */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 8rem 2rem 5rem;
+            padding: 10rem 2rem 6rem;
         }
 
-        .hero-inner {
-            max-width: 800px;
-        }
+        .hero-inner { max-width: 700px; }
 
-        .hero-badge {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: rgba(238, 71, 51, 0.15);
-            border: 1px solid rgba(238, 71, 51, 0.3);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent);
+        .hero-tag {
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 2rem;
+            color: var(--dim);
+            margin-bottom: 2.5rem;
         }
 
         .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1.15;
-            margin-bottom: 1.5rem;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            letter-spacing: -0.01em;
         }
 
-        .hero h1 span {
+        .hero h1 em {
+            font-style: normal;
             color: var(--accent);
         }
 
-        .hero .hero-sub {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
+        .hero-sub {
+            font-size: 1rem;
+            color: #777;
+            max-width: 480px;
+            margin: 0 auto 3rem;
             line-height: 1.7;
+            font-weight: 300;
         }
 
         .hero-cta {
             display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--accent);
-            color: #fff;
+            padding: 1rem 3rem;
+            background: #fff;
+            color: #000;
             text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background 0.3s, transform 0.2s;
-        }
-
-        .hero-cta:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
-        .hero-proof {
-            margin-top: 2rem;
-            font-size: 0.85rem;
-            color: var(--text-dim);
-        }
-
-        /* ===== SECTIONS ===== */
-        section {
-            padding: 5rem 2rem;
-        }
-
-        .section-inner {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .section-label {
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 500;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent);
+            border-radius: 3px;
+            transition: opacity 0.3s;
+        }
+
+        .hero-cta:hover { opacity: 0.85; }
+
+        .hero-note {
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+            color: #333;
+        }
+
+        /* SECTIONS */
+        section { padding: 6rem 2rem; }
+        .inner { max-width: 960px; margin: 0 auto; }
+
+        .label {
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .sec-title {
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--white);
+            text-align: center;
             margin-bottom: 1rem;
-            text-align: center;
+            letter-spacing: -0.01em;
         }
 
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #fff;
+        .sec-sub {
             text-align: center;
-            margin-bottom: 1rem;
-            line-height: 1.2;
+            color: #666;
+            font-size: 0.95rem;
+            max-width: 500px;
+            margin: 0 auto 4rem;
+            font-weight: 300;
         }
 
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            max-width: 650px;
-            margin: 0 auto 3rem;
-        }
-
-        /* ===== STATS BAR ===== */
-        .stats-bar {
-            background: var(--bg-section);
+        /* STATS */
+        .stats {
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
+            background: var(--bg-alt);
         }
 
         .stats-grid {
@@ -204,743 +183,846 @@
             text-align: center;
         }
 
-        .stat-item .stat-number {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #fff;
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--white);
+            letter-spacing: -0.02em;
         }
 
-        .stat-item .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--dim);
+            margin-top: 0.4rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
-        /* ===== PAIN POINTS ===== */
-        .pain-section {
-            background: var(--bg-section);
-        }
+        /* PAIN POINTS */
+        .pain { background: var(--bg-alt); }
 
         .pain-list {
             list-style: none;
-            max-width: 700px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
         .pain-list li {
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
+            padding: 0.85rem 0;
+            font-size: 0.9rem;
+            color: #666;
+            border-bottom: 1px solid #111;
+            padding-left: 1.5rem;
+            position: relative;
         }
 
         .pain-list li::before {
-            content: "\2717";
-            color: var(--accent);
-            font-size: 1.2rem;
-            font-weight: 700;
-            flex-shrink: 0;
-            margin-top: 0.1rem;
+            content: "\2014";
+            position: absolute;
+            left: 0;
+            color: #333;
         }
 
-        .pain-list li:last-child {
-            border-bottom: none;
-        }
+        .pain-list li:last-child { border-bottom: none; }
 
-        /* ===== SOLUTION ===== */
-        .solution-grid {
+        /* SOLUTION GRID */
+        .sol-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .solution-card {
-            background: var(--bg-card);
+            gap: 1px;
+            background: var(--border);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            transition: border-color 0.3s, transform 0.3s;
         }
 
-        .solution-card:hover {
-            border-color: #333;
-            transform: translateY(-3px);
+        .sol-cell {
+            background: var(--bg);
+            padding: 2.5rem 2rem;
         }
 
-        .solution-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        .sol-cell h3 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 0.6rem;
         }
 
-        .solution-card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.75rem;
-        }
-
-        .solution-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
+        .sol-cell p {
+            font-size: 0.8rem;
+            color: #666;
             line-height: 1.6;
         }
 
-        /* ===== RESULTS / PROOF ===== */
-        .results-section {
-            background: var(--bg-section);
-        }
+        /* PREMIUM WORKFLOWS */
+        .premium { background: var(--bg-alt); border-top: 1px solid var(--border); }
 
-        .results-grid {
+        .premium-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
         }
 
-        .result-card {
-            background: var(--bg-card);
+        .prem-card {
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 2rem;
+            border-radius: 6px;
+            overflow: hidden;
             transition: border-color 0.3s;
         }
 
-        .result-card:hover {
-            border-color: #333;
-        }
+        .prem-card:hover { border-color: #2a2a2a; }
 
-        .result-card .result-stat {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--green);
-            margin-bottom: 0.5rem;
-        }
-
-        .result-card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.5rem;
-        }
-
-        .result-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* ===== ABOUT / AUTHORITY ===== */
-        .about-section {
-            text-align: center;
-        }
-
-        .about-content {
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-        }
-
-        .about-content p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.8;
-            margin-bottom: 1.25rem;
-        }
-
-        .creds-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cred-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--text);
-        }
-
-        /* ===== WHATS INCLUDED ===== */
-        .included-section {
-            background: var(--bg-section);
-        }
-
-        .included-list {
-            list-style: none;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .included-list li {
-            padding: 1.25rem 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 1.05rem;
-            color: var(--text);
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .included-list li::before {
-            content: "\2713";
-            color: var(--green);
-            font-size: 1.2rem;
-            font-weight: 700;
-            flex-shrink: 0;
-            margin-top: 0.1rem;
-        }
-
-        .included-list li:last-child {
-            border-bottom: none;
-        }
-
-        .included-list li strong {
-            color: #fff;
-        }
-
-        /* ===== PROJECTS SHOWCASE ===== */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: border-color 0.3s, transform 0.3s;
-        }
-
-        .project-card:hover {
-            border-color: #333;
-            transform: translateY(-3px);
-        }
-
-        .project-img {
+        .prem-img {
             width: 100%;
-            height: 180px;
+            aspect-ratio: 1;
+            background: #0a0a0a;
             background-size: cover;
             background-position: center;
-            border-bottom: 1px solid var(--border);
         }
 
-        .project-body {
-            padding: 1.5rem;
+        .prem-body {
+            padding: 1.25rem;
         }
 
-        .project-body h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-body p {
+        .prem-body h3 {
             font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.6;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
         }
 
-        .project-body .project-stat {
-            font-size: 0.8rem;
-            color: var(--green);
-            font-weight: 600;
+        .prem-body p {
+            font-size: 0.75rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .prem-tag {
+            display: inline-block;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
             margin-top: 0.75rem;
         }
 
-        /* ===== CTA SECTIONS ===== */
-        .cta-section {
+        /* FREE TEMPLATES */
+        .templates { border-top: 1px solid var(--border); }
+
+        .tmpl-count {
             text-align: center;
-            padding: 5rem 2rem;
+            font-size: 0.75rem;
+            color: #444;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.05em;
         }
 
-        .cta-section h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #fff;
+        .tmpl-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: #111;
+            border: 1px solid #111;
+        }
+
+        .tmpl {
+            background: var(--bg);
+            padding: 0.9rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .tmpl-name {
+            font-size: 0.72rem;
+            color: #888;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .tmpl-views {
+            font-size: 0.65rem;
+            color: #444;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .tmpl-show-more {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .tmpl-show-more button {
+            background: none;
+            border: 1px solid #222;
+            color: #555;
+            padding: 0.6rem 2rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .tmpl-show-more button:hover {
+            border-color: #444;
+            color: #999;
+        }
+
+        /* CTA SECTIONS */
+        .cta-block {
+            text-align: center;
+            padding: 6rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .cta-block h2 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--white);
             margin-bottom: 1rem;
         }
 
-        .cta-section p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            max-width: 550px;
-            margin: 0 auto 2rem;
+        .cta-block p {
+            color: #666;
+            font-size: 0.9rem;
+            max-width: 400px;
+            margin: 0 auto 2.5rem;
+            font-weight: 300;
         }
 
         .cta-btn {
             display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--accent);
-            color: #fff;
+            padding: 1rem 3rem;
+            background: #fff;
+            color: #000;
             text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background 0.3s, transform 0.2s;
+            border-radius: 3px;
+            transition: opacity 0.3s;
         }
 
-        .cta-btn:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-        }
+        .cta-btn:hover { opacity: 0.85; }
 
         .cta-note {
             margin-top: 1rem;
-            font-size: 0.8rem;
-            color: var(--text-dim);
+            font-size: 0.7rem;
+            color: #333;
         }
 
-        /* ===== FAQ ===== */
+        /* ABOUT */
+        .about {
+            text-align: center;
+            background: var(--bg-alt);
+            border-top: 1px solid var(--border);
+        }
+
+        .about-text {
+            max-width: 550px;
+            margin: 0 auto 3rem;
+        }
+
+        .about-text p {
+            font-size: 0.9rem;
+            color: #777;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .creds {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cred {
+            font-size: 0.65rem;
+            color: #444;
+            padding: 0.35rem 0.75rem;
+            border: 1px solid #1a1a1a;
+            border-radius: 3px;
+            letter-spacing: 0.05em;
+        }
+
+        /* FAQ */
+        .faq { border-top: 1px solid var(--border); }
+
         .faq-list {
-            max-width: 700px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
         .faq-item {
-            border-bottom: 1px solid var(--border);
-            padding: 1.5rem 0;
+            border-bottom: 1px solid #111;
             cursor: pointer;
         }
 
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-
-        .faq-question {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #fff;
+        .faq-q {
+            padding: 1.25rem 0;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #999;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .faq-question .toggle {
-            font-size: 1.5rem;
-            color: var(--text-dim);
+        .faq-q .t {
+            font-size: 1rem;
+            color: #333;
             transition: transform 0.3s;
         }
 
-        .faq-answer {
-            font-size: 0.95rem;
-            color: var(--text-muted);
+        .faq-a {
+            font-size: 0.8rem;
+            color: #555;
             line-height: 1.7;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
+            transition: max-height 0.4s, padding 0.4s;
         }
 
-        .faq-item.open .faq-answer {
-            max-height: 300px;
-            padding-top: 1rem;
+        .faq-item.open .faq-a {
+            max-height: 200px;
+            padding-bottom: 1.25rem;
         }
 
-        .faq-item.open .toggle {
-            transform: rotate(45deg);
-        }
+        .faq-item.open .t { transform: rotate(45deg); }
 
-        /* ===== FOOTER ===== */
+        /* FOOTER */
         footer {
             text-align: center;
-            padding: 2.5rem 1.5rem;
+            padding: 2.5rem;
             border-top: 1px solid var(--border);
         }
 
-        .footer-links {
+        .foot-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-bottom: 1rem;
         }
 
-        .footer-links a {
-            color: var(--text-dim);
+        .foot-links a {
+            color: #333;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
             transition: color 0.3s;
         }
 
-        .footer-links a:hover {
-            color: var(--text-muted);
-        }
+        .foot-links a:hover { color: #777; }
 
-        .footer-copy {
-            font-size: 0.8rem;
-            color: #333;
-        }
-
-        /* ===== DIVIDER ===== */
-        .divider {
-            height: 1px;
-            background: var(--border);
-            max-width: 200px;
-            margin: 0 auto;
-        }
-
-        /* ===== RESPONSIVE ===== */
+        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .hero .hero-sub {
-                font-size: 1rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-
-            .solution-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .results-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            section {
-                padding: 3.5rem 1.25rem;
-            }
-
-            .section-title {
-                font-size: 1.7rem;
-            }
-
-            .cta-section h2 {
-                font-size: 1.7rem;
-            }
+            .hero h1 { font-size: 2rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .sol-grid { grid-template-columns: 1fr; }
+            .premium-grid { grid-template-columns: 1fr 1fr; }
+            .tmpl-grid { grid-template-columns: repeat(2, 1fr); }
+            section { padding: 4rem 1.25rem; }
+            .sec-title { font-size: 1.6rem; }
         }
 
         @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-
-            .stat-item .stat-number {
-                font-size: 1.6rem;
-            }
+            .premium-grid { grid-template-columns: 1fr; }
+            .tmpl-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAV -->
     <nav>
         <div class="nav-inner">
             <a href="index.html" class="logo">David Ashby</a>
-            <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="nav-cta" target="_blank">Join Now</a>
+            <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="nav-cta" target="_blank">Join</a>
         </div>
     </nav>
 
     <!-- HERO -->
     <section class="hero">
         <div class="hero-inner">
-            <div class="hero-badge">#1 Ranked n8n Creator</div>
-            <h1>Learn the Exact System I Used to Build a <span>$5,000+ Automation Business</span> From Scratch</h1>
-            <p class="hero-sub">The step-by-step blueprint for building, selling, and scaling n8n & AI automation workflows &mdash; from someone who actually did it.</p>
+            <div class="hero-tag">#1 n8n Creator</div>
+            <h1>Turn Automation Into <em>Income</em></h1>
+            <p class="hero-sub">The system behind 200+ published workflows and thousands in template sales.</p>
             <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="hero-cta" target="_blank">Join Beyond Nodes</a>
-            <p class="hero-proof">99 members already inside &bull; 204 templates published &bull; 164 workflows sold</p>
+            <p class="hero-note">Cancel anytime</p>
         </div>
     </section>
 
-    <!-- STATS BAR -->
-    <section class="stats-bar">
-        <div class="section-inner">
+    <!-- STATS -->
+    <section class="stats">
+        <div class="inner">
             <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">#1</div>
-                    <div class="stat-label">n8n Creator Worldwide</div>
+                <div>
+                    <div class="stat-num">#1</div>
+                    <div class="stat-label">n8n Creator</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">204</div>
-                    <div class="stat-label">Workflow Templates</div>
+                <div>
+                    <div class="stat-num">200+</div>
+                    <div class="stat-label">Templates</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">$5,389</div>
-                    <div class="stat-label">Template Revenue</div>
+                <div>
+                    <div class="stat-num">$5K+</div>
+                    <div class="stat-label">Revenue</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number">550K+</div>
-                    <div class="stat-label">Content Views (90 Days)</div>
+                <div>
+                    <div class="stat-num">500K+</div>
+                    <div class="stat-label">Content Views</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PAIN POINTS -->
-    <section class="pain-section">
-        <div class="section-inner">
-            <div class="section-label">Sound Familiar?</div>
-            <h2 class="section-title">You Know Automation Is the Future &mdash; But You're Stuck</h2>
-            <p class="section-subtitle">You've tried building workflows. You've watched the tutorials. But nothing's turning into real income.</p>
+    <!-- PAIN -->
+    <section class="pain">
+        <div class="inner">
+            <div class="label">The Problem</div>
+            <h2 class="sec-title">Skills Without a System</h2>
+            <p class="sec-sub">You know automation. You just haven't turned it into a business yet.</p>
             <ul class="pain-list">
-                <li>You're spending hours building automations but have no idea how to actually sell them</li>
-                <li>You see others making money with n8n but can't figure out what they're doing differently</li>
-                <li>You've tried freelancing automation services but clients don't understand the value</li>
-                <li>You're stuck in tutorial hell &mdash; learning tools but never building a real business</li>
-                <li>You don't have a system for creating templates that people actually want to buy</li>
-                <li>You're trading time for money with one-off projects instead of building scalable income</li>
+                <li>Building workflows but not selling them</li>
+                <li>Stuck in tutorial hell with no revenue path</li>
+                <li>Trading time for money on one-off projects</li>
+                <li>No system for creating templates people actually buy</li>
             </ul>
         </div>
     </section>
 
     <!-- SOLUTION -->
     <section>
-        <div class="section-inner">
-            <div class="section-label">The Solution</div>
-            <h2 class="section-title">Everything You Need to Build a Profitable Automation Business</h2>
-            <p class="section-subtitle">Beyond Nodes gives you the proven framework, templates, and community to go from builder to business owner.</p>
-            <div class="solution-grid">
-                <div class="solution-card">
-                    <div class="solution-icon">&#9881;</div>
-                    <h3>Workflow Templates</h3>
-                    <p>Access battle-tested n8n workflow templates that you can deploy, customize, and learn from &mdash; built by the #1 creator on the platform.</p>
+        <div class="inner">
+            <div class="label">What You Get</div>
+            <h2 class="sec-title">Everything Inside Beyond Nodes</h2>
+            <p class="sec-sub">Framework, templates, and community.</p>
+            <div class="sol-grid">
+                <div class="sol-cell">
+                    <h3>Workflow Library</h3>
+                    <p>Production-ready n8n templates to deploy, learn from, and sell</p>
                 </div>
-                <div class="solution-card">
-                    <div class="solution-icon">&#128640;</div>
-                    <h3>Monetization Playbook</h3>
-                    <p>Learn exactly how to package, price, and sell automation workflows. From template marketplaces to direct client work.</p>
+                <div class="sol-cell">
+                    <h3>Monetization</h3>
+                    <p>How to package, price, and distribute automation workflows</p>
                 </div>
-                <div class="solution-card">
-                    <div class="solution-icon">&#129302;</div>
+                <div class="sol-cell">
                     <h3>AI Integration</h3>
-                    <p>Stay ahead with cutting-edge AI automation techniques. Build smarter workflows that command premium prices.</p>
+                    <p>Cutting-edge AI automation techniques that command premium pricing</p>
                 </div>
-                <div class="solution-card">
-                    <div class="solution-icon">&#128101;</div>
-                    <h3>Private Community</h3>
-                    <p>Collaborate with motivated automation builders. Get feedback, share wins, and learn from people on the same path.</p>
-                </div>
-                <div class="solution-card">
-                    <div class="solution-icon">&#128218;</div>
+                <div class="sol-cell">
                     <h3>API Mastery</h3>
-                    <p>Deep dives into API reverse engineering, OAuth2, and building integrations that others can't. The technical edge that separates amateurs from pros.</p>
+                    <p>Reverse engineering, OAuth2, and integrations others can't build</p>
                 </div>
-                <div class="solution-card">
-                    <div class="solution-icon">&#128200;</div>
-                    <h3>Scaling Systems</h3>
-                    <p>Build automated distribution, content pipelines, and repeatable processes that grow your income without growing your hours.</p>
+                <div class="sol-cell">
+                    <h3>Private Community</h3>
+                    <p>Collaborate with builders who are actually making money</p>
+                </div>
+                <div class="sol-cell">
+                    <h3>Direct Access</h3>
+                    <p>Get answers from the #1 n8n creator, not a support team</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- MID CTA -->
-    <section class="cta-section" style="background: var(--bg-section); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-        <h2>Ready to Stop Guessing and Start Building?</h2>
-        <p>Join 99 automation builders who are turning their n8n skills into real revenue.</p>
+    <div class="cta-block" style="background: var(--bg-alt);">
+        <h2>Ready?</h2>
+        <p>Join 100 automation builders turning skills into revenue.</p>
         <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="cta-btn" target="_blank">Join Beyond Nodes</a>
-    </section>
+    </div>
 
-    <!-- RESULTS -->
-    <section class="results-section">
-        <div class="section-inner">
-            <div class="section-label">Proof It Works</div>
-            <h2 class="section-title">Real Results, Not Theory</h2>
-            <p class="section-subtitle">These aren't hypothetical &mdash; these are actual outcomes from applying the systems taught inside Beyond Nodes.</p>
-            <div class="results-grid">
-                <div class="result-card">
-                    <div class="result-stat">#1 of 204+</div>
-                    <h3>Top Creator on n8n</h3>
-                    <p>Ranked #1 Verified Creator on n8n.io with more templates than anyone else on the platform. Built with the same systems taught in the community.</p>
+    <!-- PREMIUM WORKFLOWS -->
+    <section class="premium">
+        <div class="inner">
+            <div class="label">Premium Workflows</div>
+            <h2 class="sec-title">Built to Sell</h2>
+            <p class="sec-sub">Production-grade automation &mdash; available inside Beyond Nodes.</p>
+            <div class="premium-grid">
+                <div class="prem-card">
+                    <div class="prem-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/n8n.png');"></div>
+                    <div class="prem-body">
+                        <h3>Automated Workflow Generator</h3>
+                        <p>Generate n8n workflows from API specifications automatically</p>
+                        <span class="prem-tag">Members Only</span>
+                    </div>
                 </div>
-                <div class="result-card">
-                    <div class="result-stat">$5,389+</div>
-                    <h3>Template Revenue</h3>
-                    <p>Generated from selling 164 automation workflows. Recurring passive income from templates that sell while you sleep.</p>
+                <div class="prem-card">
+                    <div class="prem-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/workflow.png');"></div>
+                    <div class="prem-body">
+                        <h3>Content Distribution Pipeline</h3>
+                        <p>The system behind 500K+ views in 90 days</p>
+                        <span class="prem-tag">Members Only</span>
+                    </div>
                 </div>
-                <div class="result-card">
-                    <div class="result-stat">71.9K Stars</div>
-                    <h3>Open Source Impact</h3>
-                    <p>Contributed to Browser-Use, closing 50 issues in 48 hours. The kind of visibility that creates authority and opportunities.</p>
+                <div class="prem-card">
+                    <div class="prem-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/browser.gif');"></div>
+                    <div class="prem-body">
+                        <h3>AI Browser Automation Suite</h3>
+                        <p>Advanced Playwright-based web automation with AI agents</p>
+                        <span class="prem-tag">Members Only</span>
+                    </div>
                 </div>
-                <div class="result-card">
-                    <div class="result-stat">550K+ Views</div>
-                    <h3>Content Distribution</h3>
-                    <p>Automated content pipeline generating 300K YouTube + 250K TikTok views in 90 days using the same automation principles taught here.</p>
+                <div class="prem-card">
+                    <div class="prem-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/OBS-WS.png');"></div>
+                    <div class="prem-body">
+                        <h3>WebSocket Event Monitor</h3>
+                        <p>Real-time event forwarding for automated live streaming</p>
+                        <span class="prem-tag">Members Only</span>
+                    </div>
+                </div>
+                <div class="prem-card">
+                    <div class="prem-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/labels.png');"></div>
+                    <div class="prem-body">
+                        <h3>Hardware Print Automation</h3>
+                        <p>Event-driven label printing with conditional logic</p>
+                        <span class="prem-tag">Members Only</span>
+                    </div>
+                </div>
+                <div class="prem-card">
+                    <div class="prem-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/schwabpy.png');"></div>
+                    <div class="prem-body">
+                        <h3>Trading API Wrapper</h3>
+                        <p>Python wrapper for financial trading automation</p>
+                        <span class="prem-tag">Members Only</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ABOUT / AUTHORITY -->
-    <section class="about-section">
-        <div class="section-inner">
-            <div class="section-label">Your Instructor</div>
-            <h2 class="section-title">David Ashby</h2>
-            <div class="about-content">
-                <p>Offensive Security Engineer. Physical Penetration Tester. The #1 ranked creator on n8n.io. With 8 years of IT/Engineering experience and a BS in Cybersecurity (graduating 2026 from WGU), I've built my career at the intersection of security, automation, and code.</p>
-                <p>I reverse-engineered the n8n creator dashboard API to automate uploading workflows. I built Python automation to generate n8n workflows from API specs. I contributed to a 71.9K-star GitHub project. I've been a YC Agents Hackathon judge. And I've turned these skills into real, measurable income.</p>
-                <p>Inside Beyond Nodes, I teach everything I've learned &mdash; the systems, the shortcuts, and the strategies that actually work.</p>
-            </div>
-            <div class="creds-grid">
-                <div class="cred-item">CompTIA PenTest+</div>
-                <div class="cred-item">CompTIA CySA+</div>
-                <div class="cred-item">CompTIA Security+</div>
-                <div class="cred-item">CompTIA Network+</div>
-                <div class="cred-item">SSCP &ndash; (ISC)&sup2;</div>
-                <div class="cred-item">Linux Essentials</div>
-                <div class="cred-item">ITIL 4 Foundation</div>
-                <div class="cred-item">16 Certifications Total</div>
+    <!-- FREE TEMPLATES -->
+    <section class="templates">
+        <div class="inner">
+            <div class="label">Free Templates</div>
+            <h2 class="sec-title">200+ Public Workflows</h2>
+            <p class="tmpl-count">Sorted by popularity</p>
+            <div class="tmpl-grid" id="tmplGrid"></div>
+            <div class="tmpl-show-more" id="showMoreWrap">
+                <button id="showMoreBtn">Show All Templates</button>
             </div>
         </div>
     </section>
 
-    <!-- WHAT'S INCLUDED -->
-    <section class="included-section">
-        <div class="section-inner">
-            <div class="section-label">What You Get</div>
-            <h2 class="section-title">Everything Inside Beyond Nodes</h2>
-            <p class="section-subtitle">A complete system for building an automation business &mdash; not just another course.</p>
-            <ul class="included-list">
-                <li><strong>Full Workflow Template Library</strong> &mdash; Access to production-ready n8n templates you can deploy, learn from, and sell</li>
-                <li><strong>Monetization Framework</strong> &mdash; The exact process for turning workflows into income: pricing, packaging, and distribution</li>
-                <li><strong>API Reverse Engineering Guides</strong> &mdash; Learn how to build integrations others can't by understanding APIs at a deeper level</li>
-                <li><strong>AI Automation Modules</strong> &mdash; Stay current with AI-powered workflow techniques that command premium pricing</li>
-                <li><strong>Private Community Access</strong> &mdash; Collaborate, get feedback, and grow alongside other automation builders</li>
-                <li><strong>Content Distribution Playbook</strong> &mdash; The automated pipeline that generated 550K+ views in 90 days</li>
-                <li><strong>Direct Access to David</strong> &mdash; Get answers from the #1 n8n creator, not a support team</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- PROJECTS SHOWCASE -->
-    <section>
-        <div class="section-inner">
-            <div class="section-label">Built by the Instructor</div>
-            <h2 class="section-title">Real Projects, Real Results</h2>
-            <p class="section-subtitle">These are projects built using the same skills and systems taught inside Beyond Nodes.</p>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/n8n.png');"></div>
-                    <div class="project-body">
-                        <h3>#1 n8n Creator &mdash; Automated Automation</h3>
-                        <p>Built Python automation to generate n8n workflows from API specs, then reverse-engineered the creator dashboard to automate distribution.</p>
-                        <div class="project-stat">164 sold &bull; $5,389 revenue &bull; 204 templates</div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/browser.gif');"></div>
-                    <div class="project-body">
-                        <h3>Browser-Use: AI Web Automation</h3>
-                        <p>Contributed to 71.9K-star open source project. Closed 50 issues in 48 hours, focusing on security and bot detection bypass.</p>
-                        <div class="project-stat">71.9K stars &bull; 8.5K forks &bull; 262 contributors</div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/OBS-WS.png');"></div>
-                    <div class="project-body">
-                        <h3>Chrome WebSocket Proxy for OBS</h3>
-                        <p>Chrome extension that monitors WebSocket traffic and forwards to OBS for real-time updates during automated live streaming.</p>
-                        <div class="project-stat">Real-time monitoring &bull; OBS integration</div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/workflow.png');"></div>
-                    <div class="project-body">
-                        <h3>Automated Content Distribution</h3>
-                        <p>Built the automated pipeline that generated 550K+ content views across YouTube and TikTok in just 90 days.</p>
-                        <div class="project-stat">300K YouTube &bull; 250K TikTok &bull; 90 days</div>
-                    </div>
-                </div>
+    <!-- ABOUT -->
+    <section class="about">
+        <div class="inner">
+            <div class="label">About</div>
+            <h2 class="sec-title">David Ashby</h2>
+            <div class="about-text">
+                <p>Offensive Security Engineer. #1 n8n Creator. 8 years in IT and security. Contributor to a 70K+ star open source project. YC Hackathon Judge.</p>
+            </div>
+            <div class="creds">
+                <span class="cred">PenTest+</span>
+                <span class="cred">CySA+</span>
+                <span class="cred">Security+</span>
+                <span class="cred">Network+</span>
+                <span class="cred">SSCP</span>
+                <span class="cred">ITIL 4</span>
+                <span class="cred">Linux Essentials</span>
+                <span class="cred">16 Certifications</span>
             </div>
         </div>
     </section>
 
     <!-- FAQ -->
-    <section style="background: var(--bg-section); border-top: 1px solid var(--border);">
-        <div class="section-inner">
-            <div class="section-label">FAQ</div>
-            <h2 class="section-title">Common Questions</h2>
+    <section class="faq">
+        <div class="inner">
+            <div class="label">FAQ</div>
             <div class="faq-list">
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Who is this for?</span>
-                        <span class="toggle">+</span>
-                    </div>
-                    <div class="faq-answer">Beyond Nodes is for anyone who wants to turn their n8n and automation skills into real income. Whether you're a developer, freelancer, or just getting started with automation &mdash; if you want to build a business around workflows, this is for you.</div>
+                    <div class="faq-q"><span>Who is this for?</span><span class="t">+</span></div>
+                    <div class="faq-a">Anyone who wants to monetize their automation skills. Developers, freelancers, or builders with some n8n experience who want to turn it into income.</div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Do I need to be an expert at n8n?</span>
-                        <span class="toggle">+</span>
-                    </div>
-                    <div class="faq-answer">No. The community covers everything from fundamentals to advanced techniques. If you're brand new, start with the free community first. Beyond Nodes is best for people who have some automation experience and want to monetize it.</div>
+                    <div class="faq-q"><span>Do I need to be an expert?</span><span class="t">+</span></div>
+                    <div class="faq-a">No. If you're brand new, start with the free community. Beyond Nodes is for people with some automation experience who want to monetize it.</div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <span>What makes this different from free YouTube tutorials?</span>
-                        <span class="toggle">+</span>
-                    </div>
-                    <div class="faq-answer">Tutorials teach you tools. Beyond Nodes teaches you how to build a business. You get proven monetization frameworks, production-ready templates, direct access to the #1 n8n creator, and a community of people actually doing it &mdash; not just watching.</div>
+                    <div class="faq-q"><span>How is this different from YouTube tutorials?</span><span class="t">+</span></div>
+                    <div class="faq-a">Tutorials teach tools. Beyond Nodes teaches business. Proven frameworks, production templates, and direct access to the #1 n8n creator.</div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <span>What if I'm already in the free community?</span>
-                        <span class="toggle">+</span>
-                    </div>
-                    <div class="faq-answer">The free community teaches automation fundamentals. Beyond Nodes goes deeper: monetization strategies, API reverse engineering, AI automation, the content distribution system, and direct access to David for personalized guidance.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Is there a refund policy?</span>
-                        <span class="toggle">+</span>
-                    </div>
-                    <div class="faq-answer">The community is hosted on Skool. You can cancel your membership at any time. No long-term contracts, no hidden fees.</div>
+                    <div class="faq-q"><span>Can I cancel?</span><span class="t">+</span></div>
+                    <div class="faq-a">Anytime. No contracts, no hidden fees. Hosted on Skool.</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FINAL CTA -->
-    <section class="cta-section">
-        <h2>Stop Building Automations for Free</h2>
-        <p>Join the community that's turning n8n skills into income. Get the templates, the framework, and the support to make it happen.</p>
-        <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="cta-btn" target="_blank">Join Beyond Nodes Now</a>
-        <p class="cta-note">Cancel anytime &bull; No long-term commitment</p>
-    </section>
+    <div class="cta-block">
+        <h2>Stop Building for Free</h2>
+        <p>Templates, framework, community.</p>
+        <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="cta-btn" target="_blank">Join Beyond Nodes</a>
+        <p class="cta-note">Cancel anytime</p>
+    </div>
 
-    <!-- FOOTER -->
     <footer>
-        <div class="footer-links">
+        <div class="foot-links">
             <a href="index.html">Home</a>
             <a href="https://www.linkedin.com/in/david-ashby/" target="_blank">LinkedIn</a>
             <a href="https://github.com/Cfomodz" target="_blank">GitHub</a>
             <a href="https://n8n.io/creators/" target="_blank">n8n</a>
         </div>
-        <div class="footer-copy">&copy; 2025 David Ashby. All rights reserved.</div>
     </footer>
 
     <script>
-        // FAQ accordion
-        document.querySelectorAll('.faq-item').forEach(item => {
-            item.querySelector('.faq-question').addEventListener('click', () => {
-                const wasOpen = item.classList.contains('open');
-                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-                if (!wasOpen) {
-                    item.classList.add('open');
-                }
-            });
+    // FAQ
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.faq-q').addEventListener('click', () => {
+            const open = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!open) item.classList.add('open');
         });
+    });
+
+    // Templates data (sorted by views desc)
+    const templates = [
+        ["Google Ads", 2500],
+        ["Image Moderation API", 2100],
+        ["LinkedIn Posts", 1700],
+        ["WordPress", 1600],
+        ["eBay Listing Drafts", 1600],
+        ["Pipedrive CRM", 1600],
+        ["ElevenLabs Voice & TTS", 1300],
+        ["eBay Catalog API", 1300],
+        ["Twilio Call & SMS", 1200],
+        ["AWS Cost & Usage", 1200],
+        ["TheHive Security", 1100],
+        ["Discord Control via GPT-4o", 1000],
+        ["BulkSMS Messaging", 1000],
+        ["PDF Document Generation", 1000],
+        ["IP2WHOIS Domain Lookup", 900],
+        ["Clarify Audio & Video", 900],
+        ["Internet Archive Search", 800],
+        ["Discord Bot Control", 800],
+        ["eBay Marketing API", 800],
+        ["SharePoint", 700],
+        ["CloudWatch Insights", 700],
+        ["Hacker News", 700],
+        ["eBay Negotiation API", 600],
+        ["Domains-Index API", 600],
+        ["Grafana", 600],
+        ["Strava", 600],
+        ["Marketstack Market Data", 600],
+        ["eBay Seller Metrics", 500],
+        ["Google Drive", 500],
+        ["Discord Message Proxy", 500],
+        ["NYT Article Search", 500],
+        ["Wayback Machine", 500],
+        ["WHOIS Domain Mgmt", 500],
+        ["Cloudflare", 500],
+        ["Api2Pdf Converter", 500],
+        ["Background Removal", 500],
+        ["PagerDuty", 400],
+        ["Zammad Tickets", 400],
+        ["AWS Transcribe", 400],
+        ["Instagram API", 400],
+        ["Medium API", 400],
+        ["eBay Compliance", 400],
+        ["IP2Proxy Detection", 400],
+        ["Mailcheck", 400],
+        ["Transportation Laws API", 400],
+        ["eBay Seller Account", 400],
+        ["Knowledge Base Builder", 400],
+        ["Sleep Meditation Generator", 400],
+        ["Mobility API", 400],
+        ["Zendesk", 400],
+        ["Strapi CMS", 400],
+        ["CO2 Data API", 400],
+        ["QuickBooks Online", 400],
+        ["Notion API", 400],
+        ["OneDrive", 400],
+        ["Zoom Meetings", 400],
+        ["IP Geolocation", 400],
+        ["Google Calendar Rescheduler", 300],
+        ["SyncroMSP", 300],
+        ["File Hash Verification", 300],
+        ["eBay Recommendation API", 300],
+        ["BIN Card Lookup", 300],
+        ["GitHub Automation Hub", 300],
+        ["Google Business Profile", 300],
+        ["Yourls URL Shortener", 300],
+        ["eBay Analytics", 300],
+        ["Jina AI", 300],
+        ["NPR Listening", 300],
+        ["GitLab", 300],
+        ["Mandrill Email", 300],
+        ["IPQualityScore", 300],
+        ["DeepL Translate", 300],
+        ["Jira Issues", 300],
+        ["HighLevel CRM", 300],
+        ["Topupsapi", 300],
+        ["Elastic Security", 300],
+        ["CircleCI", 300],
+        ["Customer.io Marketing", 300],
+        ["Philips Hue", 300],
+        ["Metabase", 300],
+        ["ActiveCampaign", 300],
+        ["Storyblok CMS", 300],
+        ["BikeWise Incidents", 300],
+        ["AWS Budgets", 300],
+        ["Gong", 200],
+        ["NPR Station Finder", 200],
+        ["Splunk", 200],
+        ["Beeminder", 200],
+        ["One Simple API", 200],
+        ["Google Translate", 200],
+        ["DHL Tracking", 200],
+        ["Nextcloud", 200],
+        ["SerpApi Search", 200],
+        ["Action Network", 200],
+        ["Google Firestore", 200],
+        ["Trello", 200],
+        ["Auto-triage GitHub Issues", 200],
+        ["NocoDB", 200],
+        ["Spotify", 200],
+        ["Gotify Notifications", 200],
+        ["Microsoft Entra ID", 200],
+        ["Copper CRM", 200],
+        ["Monday.com", 200],
+        ["Oura Ring", 200],
+        ["Asana Projects", 200],
+        ["Webex by Cisco", 200],
+        ["Salesmate CRM", 200],
+        ["Microsoft Dynamics CRM", 200],
+        ["Google Cloud NLP", 200],
+        ["NASA Data", 200],
+        ["Reddit", 200],
+        ["Google Workspace Admin", 200],
+        ["Microsoft Graph Security", 200],
+        ["X (Twitter)", 200],
+        ["Clockify Time Tracking", 200],
+        ["Affinity CRM", 200],
+        ["Iterable", 200],
+        ["MISP Threat Intel", 200],
+        ["Lemlist Leads", 200],
+        ["Mattermost", 200],
+        ["Todoist", 200],
+        ["HaloPSA", 200],
+        ["Star Wars Translation", 200],
+        ["YouTube Analytics", 200],
+        ["Okta Identity", 200],
+        ["Freshdesk", 200],
+        ["eBay Feed API", 200],
+        ["Stripe Payments", 200],
+        ["Emelia Outreach", 200],
+        ["Google Tasks", 200],
+        ["LoneScale Leads", 200],
+        ["Swagger2OpenAPI", 200],
+        ["Asana via Chat", 200],
+        ["Pushover Notifications", 100],
+        ["Team Knowledge Mgmt", 100],
+        ["Linear Issues", 100],
+        ["eBay Browse API", 100],
+        ["eBay Taxonomy", 100],
+        ["eBay Metadata API", 100],
+        ["SecurityScorecard", 100],
+        ["Paddle Billing", 100],
+        ["MailerLite", 100],
+        ["Raindrop Bookmarks", 100],
+        ["Sentry.io Errors", 100],
+        ["Pinecone Vector DB", 100],
+        ["Kitemaker", 100],
+        ["Baserow", 100],
+        ["Twist Messaging", 100],
+        ["Harvest Time Tracking", 100],
+        ["seven SMS", 100],
+        ["Dropbox", 100],
+        ["BambooHR", 100],
+        ["PostHog Analytics", 100],
+        ["Google Contacts", 100],
+        ["Matrix Chat", 100],
+        ["Airtop Browser", 100],
+        ["Contentful CMS", 100],
+        ["Mautic Marketing", 100],
+        ["Npm Registry", 100],
+        ["KoBoToolbox", 100],
+        ["eBay Logistics", 100],
+        ["eBay Finances", 100],
+        ["Phantombuster", 100],
+        ["GetResponse", 100],
+        ["Microsoft To Do", 100],
+        ["Sendy Email", 100],
+        ["Demio Webinars", 100],
+        ["Venafi TLS Cloud", 100],
+        ["EPA Compliance", 100],
+        ["eBay Fulfillment", 100],
+        ["Clearbit Enrichment", 100],
+        ["Google Books", 100],
+        ["Mocean SMS", 100],
+        ["Pushbullet", 100],
+        ["Venafi TLS Datacenter", 100],
+        ["CoinGecko Crypto", 100],
+        ["Discourse Forum", 100],
+        ["Google Cloud Storage", 100],
+        ["Wekan Boards", 100],
+        ["Lyft Ride API", 100],
+        ["PostBin", 100],
+        ["Autopilot", 100],
+        ["Dropcontact", 100],
+        ["Humantic AI", 100],
+        ["Monica CRM", 100],
+        ["Onfleet Delivery", 100],
+        ["ProfitWell", 100],
+        ["UptimeRobot", 100],
+        ["EPA Clean Air", 100],
+        ["EPA Clean Water", 100],
+        ["Quick Base", 100],
+        ["Bitwarden Passwords", 100],
+        ["Coda Tables", 100],
+        ["ConvertKit", 100],
+        ["E-goi Contacts", 100],
+        ["Plivo SMS", 100],
+        ["urlscan.io", 100],
+        ["eBay Deals API", 100],
+        ["Drift Chat", 100],
+        ["Netlify Deploy", 100],
+        ["SIGNL4 Alerts", 100],
+        ["TravisCI Builds", 100],
+        ["Listen Podcasts API", 100]
+    ];
+
+    const INITIAL_COUNT = 40;
+    const grid = document.getElementById('tmplGrid');
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showMoreWrap = document.getElementById('showMoreWrap');
+
+    function formatViews(v) {
+        if (v >= 1000) return (v / 1000).toFixed(1).replace('.0', '') + 'K';
+        return v + '+';
+    }
+
+    function renderTemplates(count) {
+        grid.innerHTML = '';
+        const slice = templates.slice(0, count);
+        slice.forEach(([name, views]) => {
+            const el = document.createElement('div');
+            el.className = 'tmpl';
+            el.innerHTML = '<span class="tmpl-name">' + name + '</span><span class="tmpl-views">' + formatViews(views) + '</span>';
+            grid.appendChild(el);
+        });
+    }
+
+    renderTemplates(INITIAL_COUNT);
+
+    if (templates.length > INITIAL_COUNT) {
+        showMoreBtn.textContent = 'Show All ' + templates.length + ' Templates';
+        showMoreBtn.addEventListener('click', () => {
+            renderTemplates(templates.length);
+            showMoreWrap.style.display = 'none';
+        });
+    } else {
+        showMoreWrap.style.display = 'none';
+    }
     </script>
 
 </body>
