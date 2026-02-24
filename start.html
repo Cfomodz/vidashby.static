@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond Nodes Automation Lab - David Ashby</title>
+    <style>
+        :root {
+            --bg: #000;
+            --bg-section: #0a0a0a;
+            --bg-card: #111;
+            --border: #222;
+            --text: #e4e4e4;
+            --text-muted: #999;
+            --text-dim: #666;
+            --accent: #ee4733;
+            --accent-hover: #d63a28;
+            --green: #00c853;
+            --cyan: #00d4ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        nav .nav-cta {
+            padding: 0.5rem 1.25rem;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.3s;
+        }
+
+        nav .nav-cta:hover {
+            background: var(--accent-hover);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 5rem;
+        }
+
+        .hero-inner {
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(238, 71, 51, 0.15);
+            border: 1px solid rgba(238, 71, 51, 0.3);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero .hero-sub {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .hero-cta:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .hero-proof {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .section-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 650px;
+            margin: 0 auto 3rem;
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            background: var(--bg-section);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .stat-item .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* ===== PAIN POINTS ===== */
+        .pain-section {
+            background: var(--bg-section);
+        }
+
+        .pain-list {
+            list-style: none;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .pain-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .pain-list li::before {
+            content: "\2717";
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .pain-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* ===== SOLUTION ===== */
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .solution-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .solution-card:hover {
+            border-color: #333;
+            transform: translateY(-3px);
+        }
+
+        .solution-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .solution-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.75rem;
+        }
+
+        .solution-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ===== RESULTS / PROOF ===== */
+        .results-section {
+            background: var(--bg-section);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .result-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+
+        .result-card:hover {
+            border-color: #333;
+        }
+
+        .result-card .result-stat {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--green);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ===== ABOUT / AUTHORITY ===== */
+        .about-section {
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .about-content p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+        }
+
+        .creds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cred-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        /* ===== WHATS INCLUDED ===== */
+        .included-section {
+            background: var(--bg-section);
+        }
+
+        .included-list {
+            list-style: none;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .included-list li {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.05rem;
+            color: var(--text);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .included-list li::before {
+            content: "\2713";
+            color: var(--green);
+            font-size: 1.2rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .included-list li:last-child {
+            border-bottom: none;
+        }
+
+        .included-list li strong {
+            color: #fff;
+        }
+
+        /* ===== PROJECTS SHOWCASE ===== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: #333;
+            transform: translateY(-3px);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-body h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-body p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .project-body .project-stat {
+            font-size: 0.8rem;
+            color: var(--green);
+            font-weight: 600;
+            margin-top: 0.75rem;
+        }
+
+        /* ===== CTA SECTIONS ===== */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 550px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .cta-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .cta-note {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* ===== FAQ ===== */
+        .faq-list {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 0;
+            cursor: pointer;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question .toggle {
+            font-size: 1.5rem;
+            color: var(--text-dim);
+            transition: transform 0.3s;
+        }
+
+        .faq-answer {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+            padding-top: 1rem;
+        }
+
+        .faq-item.open .toggle {
+            transform: rotate(45deg);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-muted);
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: #333;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero .hero-sub {
+                font-size: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .solution-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 3.5rem 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.7rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .stat-item .stat-number {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="logo">David Ashby</a>
+            <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="nav-cta" target="_blank">Join Now</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-badge">#1 Ranked n8n Creator</div>
+            <h1>Learn the Exact System I Used to Build a <span>$5,000+ Automation Business</span> From Scratch</h1>
+            <p class="hero-sub">The step-by-step blueprint for building, selling, and scaling n8n & AI automation workflows &mdash; from someone who actually did it.</p>
+            <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="hero-cta" target="_blank">Join Beyond Nodes</a>
+            <p class="hero-proof">99 members already inside &bull; 204 templates published &bull; 164 workflows sold</p>
+        </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <section class="stats-bar">
+        <div class="section-inner">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">#1</div>
+                    <div class="stat-label">n8n Creator Worldwide</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">204</div>
+                    <div class="stat-label">Workflow Templates</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$5,389</div>
+                    <div class="stat-label">Template Revenue</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">550K+</div>
+                    <div class="stat-label">Content Views (90 Days)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAIN POINTS -->
+    <section class="pain-section">
+        <div class="section-inner">
+            <div class="section-label">Sound Familiar?</div>
+            <h2 class="section-title">You Know Automation Is the Future &mdash; But You're Stuck</h2>
+            <p class="section-subtitle">You've tried building workflows. You've watched the tutorials. But nothing's turning into real income.</p>
+            <ul class="pain-list">
+                <li>You're spending hours building automations but have no idea how to actually sell them</li>
+                <li>You see others making money with n8n but can't figure out what they're doing differently</li>
+                <li>You've tried freelancing automation services but clients don't understand the value</li>
+                <li>You're stuck in tutorial hell &mdash; learning tools but never building a real business</li>
+                <li>You don't have a system for creating templates that people actually want to buy</li>
+                <li>You're trading time for money with one-off projects instead of building scalable income</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section>
+        <div class="section-inner">
+            <div class="section-label">The Solution</div>
+            <h2 class="section-title">Everything You Need to Build a Profitable Automation Business</h2>
+            <p class="section-subtitle">Beyond Nodes gives you the proven framework, templates, and community to go from builder to business owner.</p>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">&#9881;</div>
+                    <h3>Workflow Templates</h3>
+                    <p>Access battle-tested n8n workflow templates that you can deploy, customize, and learn from &mdash; built by the #1 creator on the platform.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">&#128640;</div>
+                    <h3>Monetization Playbook</h3>
+                    <p>Learn exactly how to package, price, and sell automation workflows. From template marketplaces to direct client work.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">&#129302;</div>
+                    <h3>AI Integration</h3>
+                    <p>Stay ahead with cutting-edge AI automation techniques. Build smarter workflows that command premium prices.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">&#128101;</div>
+                    <h3>Private Community</h3>
+                    <p>Collaborate with motivated automation builders. Get feedback, share wins, and learn from people on the same path.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">&#128218;</div>
+                    <h3>API Mastery</h3>
+                    <p>Deep dives into API reverse engineering, OAuth2, and building integrations that others can't. The technical edge that separates amateurs from pros.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">&#128200;</div>
+                    <h3>Scaling Systems</h3>
+                    <p>Build automated distribution, content pipelines, and repeatable processes that grow your income without growing your hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MID CTA -->
+    <section class="cta-section" style="background: var(--bg-section); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+        <h2>Ready to Stop Guessing and Start Building?</h2>
+        <p>Join 99 automation builders who are turning their n8n skills into real revenue.</p>
+        <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="cta-btn" target="_blank">Join Beyond Nodes</a>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="results-section">
+        <div class="section-inner">
+            <div class="section-label">Proof It Works</div>
+            <h2 class="section-title">Real Results, Not Theory</h2>
+            <p class="section-subtitle">These aren't hypothetical &mdash; these are actual outcomes from applying the systems taught inside Beyond Nodes.</p>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-stat">#1 of 204+</div>
+                    <h3>Top Creator on n8n</h3>
+                    <p>Ranked #1 Verified Creator on n8n.io with more templates than anyone else on the platform. Built with the same systems taught in the community.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-stat">$5,389+</div>
+                    <h3>Template Revenue</h3>
+                    <p>Generated from selling 164 automation workflows. Recurring passive income from templates that sell while you sleep.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-stat">71.9K Stars</div>
+                    <h3>Open Source Impact</h3>
+                    <p>Contributed to Browser-Use, closing 50 issues in 48 hours. The kind of visibility that creates authority and opportunities.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-stat">550K+ Views</div>
+                    <h3>Content Distribution</h3>
+                    <p>Automated content pipeline generating 300K YouTube + 250K TikTok views in 90 days using the same automation principles taught here.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT / AUTHORITY -->
+    <section class="about-section">
+        <div class="section-inner">
+            <div class="section-label">Your Instructor</div>
+            <h2 class="section-title">David Ashby</h2>
+            <div class="about-content">
+                <p>Offensive Security Engineer. Physical Penetration Tester. The #1 ranked creator on n8n.io. With 8 years of IT/Engineering experience and a BS in Cybersecurity (graduating 2026 from WGU), I've built my career at the intersection of security, automation, and code.</p>
+                <p>I reverse-engineered the n8n creator dashboard API to automate uploading workflows. I built Python automation to generate n8n workflows from API specs. I contributed to a 71.9K-star GitHub project. I've been a YC Agents Hackathon judge. And I've turned these skills into real, measurable income.</p>
+                <p>Inside Beyond Nodes, I teach everything I've learned &mdash; the systems, the shortcuts, and the strategies that actually work.</p>
+            </div>
+            <div class="creds-grid">
+                <div class="cred-item">CompTIA PenTest+</div>
+                <div class="cred-item">CompTIA CySA+</div>
+                <div class="cred-item">CompTIA Security+</div>
+                <div class="cred-item">CompTIA Network+</div>
+                <div class="cred-item">SSCP &ndash; (ISC)&sup2;</div>
+                <div class="cred-item">Linux Essentials</div>
+                <div class="cred-item">ITIL 4 Foundation</div>
+                <div class="cred-item">16 Certifications Total</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT'S INCLUDED -->
+    <section class="included-section">
+        <div class="section-inner">
+            <div class="section-label">What You Get</div>
+            <h2 class="section-title">Everything Inside Beyond Nodes</h2>
+            <p class="section-subtitle">A complete system for building an automation business &mdash; not just another course.</p>
+            <ul class="included-list">
+                <li><strong>Full Workflow Template Library</strong> &mdash; Access to production-ready n8n templates you can deploy, learn from, and sell</li>
+                <li><strong>Monetization Framework</strong> &mdash; The exact process for turning workflows into income: pricing, packaging, and distribution</li>
+                <li><strong>API Reverse Engineering Guides</strong> &mdash; Learn how to build integrations others can't by understanding APIs at a deeper level</li>
+                <li><strong>AI Automation Modules</strong> &mdash; Stay current with AI-powered workflow techniques that command premium pricing</li>
+                <li><strong>Private Community Access</strong> &mdash; Collaborate, get feedback, and grow alongside other automation builders</li>
+                <li><strong>Content Distribution Playbook</strong> &mdash; The automated pipeline that generated 550K+ views in 90 days</li>
+                <li><strong>Direct Access to David</strong> &mdash; Get answers from the #1 n8n creator, not a support team</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- PROJECTS SHOWCASE -->
+    <section>
+        <div class="section-inner">
+            <div class="section-label">Built by the Instructor</div>
+            <h2 class="section-title">Real Projects, Real Results</h2>
+            <p class="section-subtitle">These are projects built using the same skills and systems taught inside Beyond Nodes.</p>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/n8n.png');"></div>
+                    <div class="project-body">
+                        <h3>#1 n8n Creator &mdash; Automated Automation</h3>
+                        <p>Built Python automation to generate n8n workflows from API specs, then reverse-engineered the creator dashboard to automate distribution.</p>
+                        <div class="project-stat">164 sold &bull; $5,389 revenue &bull; 204 templates</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/browser.gif');"></div>
+                    <div class="project-body">
+                        <h3>Browser-Use: AI Web Automation</h3>
+                        <p>Contributed to 71.9K-star open source project. Closed 50 issues in 48 hours, focusing on security and bot detection bypass.</p>
+                        <div class="project-stat">71.9K stars &bull; 8.5K forks &bull; 262 contributors</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/OBS-WS.png');"></div>
+                    <div class="project-body">
+                        <h3>Chrome WebSocket Proxy for OBS</h3>
+                        <p>Chrome extension that monitors WebSocket traffic and forwards to OBS for real-time updates during automated live streaming.</p>
+                        <div class="project-stat">Real-time monitoring &bull; OBS integration</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/workflow.png');"></div>
+                    <div class="project-body">
+                        <h3>Automated Content Distribution</h3>
+                        <p>Built the automated pipeline that generated 550K+ content views across YouTube and TikTok in just 90 days.</p>
+                        <div class="project-stat">300K YouTube &bull; 250K TikTok &bull; 90 days</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section style="background: var(--bg-section); border-top: 1px solid var(--border);">
+        <div class="section-inner">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Common Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Who is this for?</span>
+                        <span class="toggle">+</span>
+                    </div>
+                    <div class="faq-answer">Beyond Nodes is for anyone who wants to turn their n8n and automation skills into real income. Whether you're a developer, freelancer, or just getting started with automation &mdash; if you want to build a business around workflows, this is for you.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do I need to be an expert at n8n?</span>
+                        <span class="toggle">+</span>
+                    </div>
+                    <div class="faq-answer">No. The community covers everything from fundamentals to advanced techniques. If you're brand new, start with the free community first. Beyond Nodes is best for people who have some automation experience and want to monetize it.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What makes this different from free YouTube tutorials?</span>
+                        <span class="toggle">+</span>
+                    </div>
+                    <div class="faq-answer">Tutorials teach you tools. Beyond Nodes teaches you how to build a business. You get proven monetization frameworks, production-ready templates, direct access to the #1 n8n creator, and a community of people actually doing it &mdash; not just watching.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What if I'm already in the free community?</span>
+                        <span class="toggle">+</span>
+                    </div>
+                    <div class="faq-answer">The free community teaches automation fundamentals. Beyond Nodes goes deeper: monetization strategies, API reverse engineering, AI automation, the content distribution system, and direct access to David for personalized guidance.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is there a refund policy?</span>
+                        <span class="toggle">+</span>
+                    </div>
+                    <div class="faq-answer">The community is hosted on Skool. You can cancel your membership at any time. No long-term contracts, no hidden fees.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="cta-section">
+        <h2>Stop Building Automations for Free</h2>
+        <p>Join the community that's turning n8n skills into income. Get the templates, the framework, and the support to make it happen.</p>
+        <a href="https://www.skool.com/beyond-nodes-automation-lab-2006" class="cta-btn" target="_blank">Join Beyond Nodes Now</a>
+        <p class="cta-note">Cancel anytime &bull; No long-term commitment</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="https://www.linkedin.com/in/david-ashby/" target="_blank">LinkedIn</a>
+            <a href="https://github.com/Cfomodz" target="_blank">GitHub</a>
+            <a href="https://n8n.io/creators/" target="_blank">n8n</a>
+        </div>
+        <div class="footer-copy">&copy; 2025 David Ashby. All rights reserved.</div>
+    </footer>
+
+    <script>
+        // FAQ accordion
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', () => {
+                const wasOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                if (!wasOpen) {
+                    item.classList.add('open');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
