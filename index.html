@@ -18,7 +18,6 @@
             --line: #dcd9d0;
             --accent: #0b7a5c;
             --accent-soft: #d8efe6;
-            --warn: #8a6d1f;
             --shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 24px rgba(0,0,0,.05);
             --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
             --sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -35,7 +34,6 @@
                 --line: #27303a;
                 --accent: #3ddc97;
                 --accent-soft: #143428;
-                --warn: #d9b45a;
                 --shadow: none;
             }
         }
@@ -162,20 +160,7 @@
         /* Repo index */
         .repo-index { margin-top: 3.5rem; }
         .repo-index h3 { font-size: 1.25rem; margin-bottom: 1rem; }
-        .filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
-        .chip {
-            font: inherit;
-            font-size: .85rem;
-            padding: .4rem .9rem;
-            border-radius: 999px;
-            border: 1px solid var(--line);
-            background: transparent;
-            color: var(--muted);
-            cursor: pointer;
-        }
-        .chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
         .repos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; list-style: none; }
-        .repos li[hidden] { display: none; }
         .repos a {
             display: block;
             height: 100%;
@@ -201,8 +186,6 @@
         .cert b { display: block; font-weight: 500; line-height: 1.35; }
         .cert span { display: block; color: var(--muted); font-size: .88rem; }
         .cert code { font-family: var(--mono); font-size: .72rem; color: var(--muted); }
-        .cert.expired b { color: var(--muted); }
-        .cert.expired em { font-style: normal; color: var(--warn); }
 
         /* Experience */
         .timeline { list-style: none; border-left: 2px solid var(--line); margin-left: .4rem; }
@@ -300,7 +283,7 @@
             <div class="stats">
                 <div class="stat"><b>58</b><span>public repositories</span></div>
                 <div class="stat"><b>128</b><span>GitHub followers</span></div>
-                <div class="stat"><b>#1</b><span>Verified n8n creator, 204 templates</span></div>
+                <div class="stat"><b>#1</b><span>Verified n8n creator in 2025</span></div>
                 <div class="stat"><b>10</b><span>active certifications</span></div>
             </div>
         </div>
@@ -315,7 +298,6 @@
                         <span class="kicker">01 / portfolio</span>
                         <h2>Things I've built</h2>
                     </div>
-                    <p>Selected open-source work across automation, security and hardware, with an index of more repos below.</p>
                 </div>
 
                 <div class="featured">
@@ -324,7 +306,7 @@
                         <div class="body">
                             <span class="repo">Cfomodz/community-use · ★ 27 · 24 forks</span>
                             <h3>n8n Workflows: Automated Automation</h3>
-                            <p>The #1 Verified Creator on n8n.io, with 204 workflow templates. I wrote Python that generates n8n workflows from API specs, then reverse-engineered the creator dashboard API so uploads ran automatically too. The paid workflows are free here for community use.</p>
+                            <p>In 2025 I was the #1 Verified Creator on n8n.io, with 204 workflow templates. I wrote Python that generates n8n workflows from API specs, then reverse-engineered the creator dashboard API so uploads ran automatically too. The paid workflows are free here for community use.</p>
                             <div class="meta">
                                 <span class="tag hi">164 sold · $5,389</span>
                                 <span class="tag">Python</span><span class="tag">n8n</span><span class="tag">API reverse engineering</span>
@@ -416,36 +398,14 @@
 
                 <div class="repo-index">
                     <h3>More from GitHub</h3>
-                    <div class="filters" role="group" aria-label="Filter repositories">
-                        <button class="chip" aria-pressed="true" data-filter="all">All</button>
-                        <button class="chip" aria-pressed="false" data-filter="security">Security &amp; OSINT</button>
-                        <button class="chip" aria-pressed="false" data-filter="automation">Automation &amp; streaming</button>
-                        <button class="chip" aria-pressed="false" data-filter="hardware">Hardware &amp; operations</button>
-                        <button class="chip" aria-pressed="false" data-filter="tools">Tools &amp; utilities</button>
-                    </div>
                     <ul class="repos">
-                        <li data-cat="security"><a href="https://github.com/Cfomodz/spam-baiter" target="_blank" rel="noopener"><b>spam-baiter</b><p>A bot that fights back against spammers and scammers, sometimes using AI.</p><small>Python · ★ 6</small></a></li>
-                        <li data-cat="security"><a href="https://github.com/Cfomodz/browser-osint" target="_blank" rel="noopener"><b>browser-osint</b><p>Browser-driven open-source intelligence gathering.</p><small>Python</small></a></li>
-                        <li data-cat="security"><a href="https://github.com/Cfomodz/passcode-pattern-recognition" target="_blank" rel="noopener"><b>passcode-pattern-recognition</b><p>Educational proof of concept that infers 4-digit PINs from pin-pad movement patterns.</p><small>TypeScript</small></a></li>
-                        <li data-cat="security"><a href="https://github.com/Cfomodz/if-a-user-account-is-found" target="_blank" rel="noopener"><b>if-a-user-account-is-found</b><p>Checks whether an email has an account by reading password-reset responses.</p><small>Python</small></a></li>
-                        <li data-cat="security"><a href="https://github.com/Cfomodz/privacy-please" target="_blank" rel="noopener"><b>privacy-please</b><p>A two-sided, hotel-style door shim, with print files and vector artwork.</p><small>3D print</small></a></li>
-                        <li data-cat="security"><a href="https://github.com/Cfomodz/Dual-Tone-Multi-Frequency-DTMF-tone-cleaner" target="_blank" rel="noopener"><b>DTMF-tone-cleaner</b><p>Strips DTMF keypad tones out of call recordings.</p><small>Audio</small></a></li>
-                        <li data-cat="security"><a href="https://github.com/Cfomodz/Open-Demand-Letter" target="_blank" rel="noopener"><b>Open-Demand-Letter</b><p>Demand-letter templates for do-not-call and TCPA violations.</p><small>Templates</small></a></li>
-                        <li data-cat="automation"><a href="https://github.com/Cfomodz/unity-livechat" target="_blank" rel="noopener"><b>unity-livechat</b><p>Twitch chat integration for Unity games.</p><small>C#</small></a></li>
-                        <li data-cat="automation"><a href="https://github.com/Cfomodz/Interactive-Livestream-Chaos-League" target="_blank" rel="noopener"><b>Interactive-Livestream-Chaos-League</b><p>A fork of an open-source interactive Twitch livestream game.</p><small>C# · ★ 2 · fork</small></a></li>
-                        <li data-cat="automation"><a href="https://github.com/Cfomodz/auto-browse-screen-recording-video-for-voiceover" target="_blank" rel="noopener"><b>auto-browse-screen-recording</b><p>Scripted browsing that records screen video, ready for a voiceover.</p><small>TypeScript</small></a></li>
-                        <li data-cat="automation"><a href="https://github.com/Cfomodz/Zoom-Video-Auto-Editor-for-vertical-video-participants" target="_blank" rel="noopener"><b>Zoom-Video-Auto-Editor</b><p>Automatically edits Zoom recordings into vertical, participant-focused video.</p><small>Python</small></a></li>
-                        <li data-cat="automation"><a href="https://github.com/Cfomodz/Sales-Goal-Thermometer" target="_blank" rel="noopener"><b>Sales-Goal-Thermometer</b><p>A live sales-goal thermometer that deploys as a serverless function.</p><small>TypeScript · ★ 1</small></a></li>
-                        <li data-cat="automation"><a href="https://github.com/Cfomodz/github-use" target="_blank" rel="noopener"><b>github-use</b><p>Keeps watch on other GitHub repositories.</p><small>Python</small></a></li>
-                        <li data-cat="hardware"><a href="https://github.com/Cfomodz/object-scanning-frontend" target="_blank" rel="noopener"><b>object-scanning-frontend</b><p>A Flask and WebSocket app for semi-automated image and barcode capture.</p><small>JavaScript · ★ 1</small></a></li>
-                        <li data-cat="hardware"><a href="https://github.com/Cfomodz/accessibility-board" target="_blank" rel="noopener"><b>accessibility-board</b><p>A DIY, 3D-printable three-key macro keyboard.</p><small>HTML</small></a></li>
-                        <li data-cat="tools"><a href="https://github.com/Cfomodz/dmarket_bot" target="_blank" rel="noopener"><b>dmarket_bot</b><p>An English translation of a DMarket trading bot, updated for the 2024 API.</p><small>Python · ★ 3</small></a></li>
-                        <li data-cat="tools"><a href="https://github.com/Cfomodz/audible-to-yoto" target="_blank" rel="noopener"><b>audible-to-yoto</b><p>Converts Audible audiobooks to Yoto format, split by chapter.</p><small>Python · ★ 3</small></a></li>
-                        <li data-cat="tools"><a href="https://github.com/Cfomodz/Plane-Eisenhower-Matrix-Desktop-Wallpaper-for-KDE-Plasma" target="_blank" rel="noopener"><b>Plane-Eisenhower-Matrix-Wallpaper</b><p>Draws Plane issues as an Eisenhower matrix on your KDE Plasma wallpaper.</p><small>Python · ★ 1</small></a></li>
-                        <li data-cat="tools"><a href="https://github.com/Cfomodz/Open-edX-Accessibility-Reader" target="_blank" rel="noopener"><b>Open-edX-Accessibility-Reader</b><p>A client-side reader and navigation aid for Open edX courses.</p><small>JavaScript</small></a></li>
-                        <li data-cat="tools"><a href="https://github.com/Cfomodz/Impossible-Invoice" target="_blank" rel="noopener"><b>Impossible-Invoice</b><p>Self-erasing, Mission: Impossible-style invoices that support rescheduling.</p><small>JavaScript · ★ 1</small></a></li>
-                        <li data-cat="tools"><a href="https://github.com/Cfomodz/FDG-ZUI" target="_blank" rel="noopener"><b>FDG-ZUI</b><p>A force-directed graph inside a zoomable interface.</p><small>HTML</small></a></li>
-                        <li data-cat="tools"><a href="https://github.com/Cfomodz/Walgreen-Photo-Library-Downloader" target="_blank" rel="noopener"><b>Walgreen-Photo-Library-Downloader</b><p>Bulk-downloads a Walgreens photo library.</p><small>JavaScript · ★ 1</small></a></li>
+                        <li><a href="https://github.com/Cfomodz/spam-baiter" target="_blank" rel="noopener"><b>spam-baiter</b><p>A bot that fights back against spammers and scammers, sometimes using AI.</p><small>Python · ★ 6</small></a></li>
+                        <li><a href="https://github.com/Cfomodz/browser-osint" target="_blank" rel="noopener"><b>browser-osint</b><p>Browser-driven open-source intelligence gathering.</p><small>Python · ★ 1</small></a></li>
+                        <li><a href="https://github.com/Cfomodz/passcode-pattern-recognition" target="_blank" rel="noopener"><b>passcode-pattern-recognition</b><p>Educational proof of concept that infers 4-digit PINs from pin-pad movement patterns.</p><small>TypeScript · ★ 1</small></a></li>
+                        <li><a href="https://github.com/Cfomodz/object-scanning-frontend" target="_blank" rel="noopener"><b>object-scanning-frontend</b><p>A Flask and WebSocket app for semi-automated image and barcode capture.</p><small>JavaScript · ★ 1</small></a></li>
+                        <li><a href="https://github.com/Cfomodz/privacy-please" target="_blank" rel="noopener"><b>privacy-please</b><p>A two-sided, hotel-style door shim, with print files and vector artwork.</p><small>3D print</small></a></li>
+                        <li><a href="https://github.com/Cfomodz/accessibility-board" target="_blank" rel="noopener"><b>accessibility-board</b><p>A DIY, 3D-printable three-key macro keyboard.</p><small>HTML</small></a></li>
+                        <li><a href="https://github.com/Cfomodz/unity-livechat" target="_blank" rel="noopener"><b>unity-livechat</b><p>Twitch chat integration for Unity games.</p><small>C#</small></a></li>
                     </ul>
                     <div class="more">
                         <a href="https://github.com/Cfomodz?tab=repositories" class="btn" target="_blank" rel="noopener">All 58 repositories on GitHub →</a>
@@ -462,7 +422,6 @@
                         <span class="kicker">02 / credentials</span>
                         <h2>Certifications</h2>
                     </div>
-                    <p>Each credential lists its issuer, dates and credential ID so you can verify it.</p>
                 </div>
 
                 <div class="cert-groups">
@@ -482,11 +441,6 @@
                             <b>Certified ISO 9001:2015 Lead Auditor Trained</b>
                             <span>Perry Johnson Registrars · Sep 2026 – Sep 2031</span>
                             <code>ID 210724262</code>
-                        </div>
-                        <div class="cert">
-                            <b>Greenhouse Gas Accounting for IT</b>
-                            <span>Cisco Networking Academy · Sep 2026</span>
-                            <code>ID 8a0f94a7-0e17-412a-92b0-c159096efcca</code>
                         </div>
                     </div>
 
@@ -524,9 +478,10 @@
                             <span>TestOut Corporation · Dec 2020</span>
                             <code>ID 6-U6-3QJB, 6-2C6-6K38G</code>
                         </div>
-                        <div class="cert expired">
-                            <b>FAA Small Unmanned Aircraft System (Part 107)</b>
-                            <span>Federal Aviation Administration · Sep 2020 · <em>expired Jan 2021</em></span>
+                        <div class="cert">
+                            <b>Greenhouse Gas Accounting for IT</b>
+                            <span>Cisco Networking Academy · Sep 2026</span>
+                            <code>ID 8a0f94a7-0e17-412a-92b0-c159096efcca</code>
                         </div>
                     </div>
                 </div>
@@ -541,7 +496,6 @@
                         <span class="kicker">03 / experience</span>
                         <h2>Where I've worked</h2>
                     </div>
-                    <p>Eight-plus years across IT, software, security and, most recently, quality engineering.</p>
                 </div>
 
                 <ol class="timeline">
@@ -553,7 +507,7 @@
                     <li>
                         <span class="when">Mar 2025 – Mar 2026</span>
                         <h3>AI Automation Workflow Creator · <span class="org">n8n</span></h3>
-                        <p>Ranked among n8n's top Verified Creators, with the most workflow templates published on the platform.</p>
+                        <p>#1 Verified Creator on n8n.io in 2025, with the most workflow templates published on the platform.</p>
                     </li>
                     <li>
                         <span class="when">Feb 2025 – Aug 2025</span>
@@ -636,8 +590,6 @@
                     </div>
 
                     <ul class="highlights">
-                        <li><b>YC Agents Hackathon Judge</b><span>Aug 2025: judged AI-driven security automation entries and gave teams technical feedback.</span></li>
-                        <li><b>550,000+ content views in 90 days</b><span>300k+ YouTube Shorts views and 250k+ TikTok views, with distribution handled by automation.</span></li>
                         <li><b>4,700+ items sold on Whatnot</b><span>Reached 10,000+ followers using AI-powered sourcing automation, which funded a first home.</span></li>
                         <li><b>DEF CON, multiple years</b><span>Hundreds of hours of training on exploits, system architectures and protocols.</span></li>
                     </ul>
@@ -656,13 +608,13 @@
                 </div>
                 <div class="communities">
                     <div class="community">
-                        <span class="tag hi" style="align-self: start;">Free · 500+ members</span>
+                        <span class="tag hi" style="align-self: start;">Free · 1,000+ members</span>
                         <h3>(n8n) Nodes Automation Lab</h3>
                         <p>Learn automation principles, collaborate with other builders and use a shared workflow library.</p>
                         <div class="links"><a href="https://www.skool.com/n8n-nodes-automation-lab-1570" target="_blank" rel="noopener">Join the community →</a></div>
                     </div>
                     <div class="community">
-                        <span class="tag" style="align-self: start;">Paid · ~100 members</span>
+                        <span class="tag" style="align-self: start;">Paid · 80+ members</span>
                         <h3>Beyond Nodes Automation Lab</h3>
                         <p>Learn to earn with n8n and AI automation.</p>
                         <div class="links"><a href="https://www.skool.com/beyond-nodes-automation-lab-2006" target="_blank" rel="noopener">Learn more →</a></div>
@@ -686,19 +638,6 @@
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Filter the repo index by category
-        const chips = document.querySelectorAll('.chip');
-        const repos = document.querySelectorAll('.repos li');
-        chips.forEach(chip => {
-            chip.addEventListener('click', () => {
-                const filter = chip.dataset.filter;
-                chips.forEach(c => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
-                repos.forEach(li => {
-                    li.hidden = filter !== 'all' && li.dataset.cat !== filter;
-                });
-            });
-        });
     </script>
 </body>
 </html>
