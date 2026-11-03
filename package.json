@@ -1,0 +1,59 @@
+{
+	"name": "vidashby-os",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "biome check --write .",
+		"lint:check": "biome check .",
+		"format": "biome format --write .",
+		"test": "vitest",
+		"test:run": "vitest run",
+		"prepare": "husky || true"
+	},
+	"lint-staged": {
+		"*.{ts,tsx}": [
+			"biome check --write --no-errors-on-unmatched"
+		],
+		"*.{js,jsx,json,css,md}": [
+			"biome check --write --no-errors-on-unmatched"
+		]
+	},
+	"dependencies": {
+		"@hookform/resolvers": "^5.2.2",
+		"@vercel/analytics": "^1.6.1",
+		"clsx": "^2.1.1",
+		"framer-motion": "^12.36.0",
+		"lucide-react": "^0.577.0",
+		"next": "16.1.6",
+		"react": "19.2.4",
+		"react-dom": "19.2.4",
+		"react-hook-form": "^7.71.2",
+		"react-markdown": "^10.1.0",
+		"redis": "^5.11.0",
+		"remark-gfm": "^4.0.1",
+		"resend": "^6.9.3",
+		"sanitize-html": "^2.17.1",
+		"zod": "^4.3.6",
+		"zustand": "^5.0.12"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.4",
+		"@tailwindcss/postcss": "^4",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
+		"@types/node": "^25",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"@types/sanitize-html": "^2.16.0",
+		"@vitejs/plugin-react": "^5.1.4",
+		"husky": "^9.1.7",
+		"jsdom": "^28.1.0",
+		"lint-staged": "^16.2.7",
+		"tailwindcss": "^4",
+		"typescript": "^5",
+		"vitest": "^4.0.18"
+	}
+}

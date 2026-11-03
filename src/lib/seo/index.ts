@@ -1,0 +1,60 @@
+/**
+ * SEO Utilities Barrel Export
+ *
+ * Provides URL-to-state mapping, metadata generation,
+ * and Schema.org structured data for search engine optimization.
+ */
+
+export {
+	ENTITY,
+	type EntityData,
+	getSameAsUrls,
+	type SocialProfile,
+} from "./entity";
+export { generatePageMetadata, SITE_CONFIG } from "./metadata";
+export {
+	generateCertificationFileMetadata,
+	generatePathMetadata,
+	generateProjectFileMetadata,
+} from "./path-metadata";
+export {
+	getAllCanonicalPaths,
+	getCanonicalPath,
+	getCertificationFileBySlug,
+	getCertificationFileSlugs,
+	getFolderFromPath,
+	getLegacyRedirectPath,
+	getProjectFileBySlug,
+	getProjectFileSlugs,
+	isValidCertificationSlug,
+	isValidProjectSlug,
+	parsePathToState,
+	windowToPath,
+} from "./path-routing";
+export { SiteIndex, type SiteIndexProps } from "./SiteIndex";
+export {
+	type CreativeWorkSchema,
+	generatePersonSchema,
+	generateProfilePageSchema,
+	generateProjectSchema,
+	generateSoftwareApplicationSchema,
+	generateWebSiteSchema,
+	type PersonSchema,
+	PROJECT_METADATA,
+	type ProfilePageSchema,
+	type ProjectMetadata,
+	renderJsonLd,
+	type SoftwareApplicationSchema,
+	type WebSiteSchema,
+} from "./schema";
+export {
+	APP_ID_TO_SLUG,
+	APP_SLUG_MAP,
+	FILE_ID_TO_SLUG,
+	FILE_SLUG_MAP,
+	generateCanonicalURL,
+	getAllIndexableURLs,
+	type HydrationState,
+	type PageSearchParams,
+	parseURLToState,
+} from "./url-state";
