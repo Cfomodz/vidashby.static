@@ -298,8 +298,8 @@
             </div>
 
             <div class="stats">
-                <div class="stat"><b>58</b><span>public repositories</span></div>
-                <div class="stat"><b>128</b><span>GitHub followers</span></div>
+                <div class="stat"><b data-gh="public_repos">58</b><span>public repositories</span></div>
+                <div class="stat"><b data-gh="followers">128</b><span>GitHub followers</span></div>
                 <div class="stat"><b>#1</b><span>Verified n8n creator, 204 templates</span></div>
                 <div class="stat"><b>10</b><span>active certifications</span></div>
             </div>
@@ -322,7 +322,7 @@
                     <article class="project">
                         <div class="thumb" style="background-image: url('https://raw.githubusercontent.com/Cfomodz/vidashby.static/refs/heads/main/n8n.png');"></div>
                         <div class="body">
-                            <span class="repo">Cfomodz/community-use · ★ 27 · 24 forks</span>
+                            <span class="repo" data-gh-repo="community-use">Cfomodz/community-use · ★ 27 · 24 forks</span>
                             <h3>n8n Workflows: Automated Automation</h3>
                             <p>The #1 Verified Creator on n8n.io, with 204 workflow templates. I wrote Python that generates n8n workflows from API specs, then reverse-engineered the creator dashboard API so uploads ran automatically too. The paid workflows are free here for community use.</p>
                             <div class="meta">
@@ -401,7 +401,7 @@
                     <article class="project">
                         <div class="thumb thumb-text"><span>$ streamdrop --target youtube --uptime 24/7</span></div>
                         <div class="body">
-                            <span class="repo">Cfomodz/StreamDrop · ★ 7 · 5 forks</span>
+                            <span class="repo" data-gh-repo="StreamDrop">Cfomodz/StreamDrop · ★ 7 · 5 forks</span>
                             <h3>StreamDrop: 24/7 Streaming on a $4 Server</h3>
                             <p>Streams any website, PyGame app or local HTML file to YouTube around the clock from a cheap Ubuntu droplet.</p>
                             <div class="meta">
@@ -448,7 +448,7 @@
                         <li data-cat="tools"><a href="https://github.com/Cfomodz/Walgreen-Photo-Library-Downloader" target="_blank" rel="noopener"><b>Walgreen-Photo-Library-Downloader</b><p>Bulk-downloads a Walgreens photo library.</p><small>JavaScript · ★ 1</small></a></li>
                     </ul>
                     <div class="more">
-                        <a href="https://github.com/Cfomodz?tab=repositories" class="btn" target="_blank" rel="noopener">All 58 repositories on GitHub →</a>
+                        <a href="https://github.com/Cfomodz?tab=repositories" class="btn" target="_blank" rel="noopener">All <span data-gh="public_repos">58</span> repositories on GitHub →</a>
                     </div>
                 </div>
             </div>
@@ -699,6 +699,55 @@
                 });
             });
         });
+
+        // Keep GitHub numbers current. The numbers in the HTML are the fallback;
+        // responses are cached for an hour to stay well inside GitHub's
+        // 60-requests-per-hour limit for unauthenticated visitors.
+        (async () => {
+            const KEY = 'gh-cache-v1', TTL = 60 * 60 * 1000;
+            let data = null;
+            try {
+                const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
+                if (cached && Date.now() - cached.at < TTL) data = cached.data;
+            } catch (e) {}
+            if (!data) {
+                try {
+                    const get = (path) => fetch('https://api.github.com' + path, { headers: { accept: 'application/vnd.github+json' } })
+                        .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+                    const [user, repos] = await Promise.all([
+                        get('/users/Cfomodz'),
+                        get('/users/Cfomodz/repos?type=owner&per_page=100'),
+                    ]);
+                    data = {
+                        user: { public_repos: user.public_repos, followers: user.followers },
+                        repos: Object.fromEntries(repos.map(r => [r.name.toLowerCase(), { stars: r.stargazers_count, forks: r.forks_count }])),
+                    };
+                    try { localStorage.setItem(KEY, JSON.stringify({ at: Date.now(), data })); } catch (e) {}
+                } catch (e) {
+                    return; // offline or rate-limited: keep the built-in numbers
+                }
+            }
+
+            document.querySelectorAll('[data-gh]').forEach(el => {
+                const value = data.user[el.dataset.gh];
+                if (typeof value === 'number') el.textContent = value;
+            });
+            document.querySelectorAll('[data-gh-repo]').forEach(el => {
+                const name = el.dataset.ghRepo, r = data.repos[name.toLowerCase()];
+                if (!r) return;
+                el.textContent = ['Cfomodz/' + name, r.stars ? '★ ' + r.stars : null, r.forks ? r.forks + ' forks' : null]
+                    .filter(Boolean).join(' · ');
+            });
+            // Repo index: refresh the star count in each card's footer.
+            document.querySelectorAll('.repos a[href^="https://github.com/Cfomodz/"]').forEach(a => {
+                const r = data.repos[a.getAttribute('href').split('/').pop().toLowerCase()];
+                const small = a.querySelector('small');
+                if (!r || !small) return;
+                const parts = small.textContent.split(' · ').filter(p => !p.startsWith('★'));
+                if (r.stars) parts.splice(1, 0, '★ ' + r.stars);
+                small.textContent = parts.join(' · ');
+            });
+        })();
     </script>
 </body>
 </html>
