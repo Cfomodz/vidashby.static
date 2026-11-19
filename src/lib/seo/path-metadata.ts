@@ -46,7 +46,7 @@ const ROUTE_METADATA: Record<string, RouteMetadata> = {
 	"/certifications": {
 		title: "Certifications",
 		description:
-			"Audit, quality and security certifications with issuers, dates and credential IDs.",
+			"Audit, quality and security certifications with issuers and dates.",
 	},
 };
 

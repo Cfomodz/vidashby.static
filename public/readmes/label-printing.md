@@ -6,7 +6,7 @@
 
 Conditional printing for Brother QL label printers: when X happens, print a label carrying X's details. I've used it for incrementing inventory stickers, buyer tags and event badges.
 
-**Stack:** Python · Hardware · Automation
+**Stack:** Python | Hardware | Automation
 
 ## Links
 

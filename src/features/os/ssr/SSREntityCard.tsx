@@ -50,7 +50,7 @@ export function SSREntityCard({ includeH1 = true }: SSREntityCardProps) {
 			{/* Primary heading — aligns with <title> for entity verification */}
 			{includeH1 && (
 				<h1 itemProp="name">
-					{ENTITY.name} — {ENTITY.jobTitle}
+					{ENTITY.name} - {ENTITY.jobTitle}
 				</h1>
 			)}
 

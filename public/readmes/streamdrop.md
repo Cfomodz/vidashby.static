@@ -1,14 +1,10 @@
-# StreamDrop: 24/7 Streaming on a $4 Server
+# StreamDrop
 
-`Cfomodz/StreamDrop` · ★ 7 · 5 forks
-
-```
-$ streamdrop --target youtube --uptime 24/7
-```
+`Cfomodz/StreamDrop` | ★ 7 | 5 forks
 
 Streams any website, PyGame app or local HTML file to YouTube around the clock from a cheap Ubuntu droplet.
 
-**Stack:** Python · YouTube Live · Linux
+**Stack:** Python | YouTube Live | Linux
 
 ## Links
 

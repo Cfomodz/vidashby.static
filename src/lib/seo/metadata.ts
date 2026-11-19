@@ -39,7 +39,7 @@ const APP_METADATA: Record<AppID, { title: string; description: string; ogImage?
 	},
 	[AppID.FolderCertifications]: {
 		title: "Certifications",
-		description: "Audit, quality and security certifications with credential IDs.",
+		description: "Audit, quality and security certifications.",
 	},
 	[AppID.Browser]: {
 		title: "Portfolio",

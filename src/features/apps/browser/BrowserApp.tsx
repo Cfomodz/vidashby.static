@@ -210,7 +210,7 @@ function ProjectView({ project }: { project: FeaturedProject }) {
 		<article className="mx-auto max-w-3xl px-6 py-8">
 			<p className="break-words font-mono text-xs text-white/40">
 				{project.repo}
-				{project.repoMeta ? ` · ${project.repoMeta}` : ""}
+				{project.repoMeta ? ` | ${project.repoMeta}` : ""}
 			</p>
 			<h1 className="mt-2 text-3xl font-bold tracking-tight text-white">{project.title}</h1>
 			<div className="relative mt-6 aspect-video w-full overflow-hidden rounded-lg border border-white/10 bg-black/40">

@@ -64,7 +64,7 @@ export const TabContent = memo(function TabContent({ activeTab }: TabContentProp
 // ---------------------------------------------------------------------------
 
 function SectionHeading({ children }: { children: string }) {
-	return <h2 className="font-mono text-sm font-medium text-white/70">{`// ${children}`}</h2>;
+	return <h2 className="font-mono text-sm font-medium text-white/70">{children}</h2>;
 }
 
 function Tag({ children, highlight }: { children: string; highlight?: boolean }) {
@@ -168,7 +168,7 @@ function OverviewPanel() {
 			</div>
 
 			<div className="space-y-3">
-				<SectionHeading>Communities I run</SectionHeading>
+				<SectionHeading>Communities</SectionHeading>
 				<div className="grid gap-2 sm:grid-cols-2">
 					{COMMUNITIES.map((community) => (
 						<div
@@ -182,7 +182,7 @@ function OverviewPanel() {
 							<p className="flex-1 text-xs leading-relaxed text-white/40">
 								{community.description}
 							</p>
-							<ExternalLink href={community.href}>{community.cta} →</ExternalLink>
+							<ExternalLink href={community.href}>{community.cta}</ExternalLink>
 						</div>
 					))}
 				</div>
@@ -199,7 +199,7 @@ function ProjectsPanel() {
 	return (
 		<div role="tabpanel" id="panel-projects" aria-labelledby="tab-projects" className="space-y-6">
 			<div className="space-y-3">
-				<SectionHeading>Things I've built</SectionHeading>
+				<SectionHeading>Portfolio</SectionHeading>
 				<div className="grid gap-3 lg:grid-cols-2">
 					{FEATURED_PROJECTS.map((project) => (
 						<ProjectCard key={project.slug} project={project} />
@@ -241,7 +241,7 @@ function ProjectCard({ project }: { project: FeaturedProject }) {
 			<div className="flex flex-1 flex-col gap-2 px-4 py-3">
 				<p className="break-words font-mono text-[10px] text-white/35">
 					{project.repo}
-					{project.repoMeta ? ` · ${project.repoMeta}` : ""}
+					{project.repoMeta ? ` | ${project.repoMeta}` : ""}
 				</p>
 				<h3 className="text-sm font-medium text-white/85">{project.title}</h3>
 				<p className="text-xs leading-relaxed text-white/45">{project.description}</p>
@@ -313,7 +313,7 @@ export function RepoIndex({ compact = false }: { compact?: boolean }) {
 				))}
 			</ul>
 			<ExternalLink href={ALL_REPOS_URL}>
-				All {STATS[0]?.value} repositories on GitHub →
+				All {STATS[0]?.value} repositories on GitHub
 			</ExternalLink>
 		</div>
 	);
@@ -331,32 +331,16 @@ function CertificationsPanel() {
 			aria-labelledby="tab-certifications"
 			className="space-y-6"
 		>
-			<p className="text-xs text-white/40">
-				Each credential lists its issuer, dates and credential ID so you can verify it.
-			</p>
 			{CERT_GROUPS.map((group) => (
 				<div key={group.slug} className="space-y-2">
 					<SectionHeading>{group.label}</SectionHeading>
 					<ul className="divide-y divide-white/[0.06] rounded-lg border border-white/[0.06]">
 						{group.certs.map((cert) => (
 							<li key={cert.name} className="px-4 py-2.5">
-								<p
-									className={clsx(
-										"text-xs font-medium",
-										cert.expired ? "text-white/45" : "text-white/80",
-									)}
-								>
-									{cert.name}
-								</p>
+								<p className="text-xs font-medium text-white/80">{cert.name}</p>
 								<p className="mt-0.5 text-[11px] text-white/40">
-									{cert.issuer} · {cert.dates}
-									{cert.expired && <span className="text-amber-300/80"> · {cert.expired}</span>}
+									{cert.issuer} | {cert.dates}
 								</p>
-								{cert.credentialId && (
-									<p className="mt-0.5 break-all font-mono text-[10px] text-white/30">
-										ID {cert.credentialId}
-									</p>
-								)}
 							</li>
 						))}
 					</ul>
@@ -369,7 +353,7 @@ function CertificationsPanel() {
 						<li key={entry.name} className="px-4 py-2.5">
 							<p className="text-xs font-medium text-white/80">{entry.name}</p>
 							<p className="mt-0.5 text-[11px] text-white/40">
-								{entry.school} · {entry.dates}
+								{entry.school} | {entry.dates}
 							</p>
 						</li>
 					))}
@@ -391,7 +375,7 @@ function ExperiencePanel() {
 			aria-labelledby="tab-experience"
 			className="space-y-4"
 		>
-			<SectionHeading>Where I've worked</SectionHeading>
+			<SectionHeading>Experience</SectionHeading>
 			<ol className="ml-1 border-l border-white/10">
 				{EXPERIENCE.map((entry) => (
 					<li key={`${entry.org}-${entry.when}`} className="relative pb-5 pl-5 last:pb-0">
@@ -403,7 +387,7 @@ function ExperiencePanel() {
 						/>
 						<p className="font-mono text-[10px] text-white/35">{entry.when}</p>
 						<h3 className="text-sm text-white/85">
-							{entry.role} · <span className="text-emerald-400">{entry.org}</span>
+							{entry.role} | <span className="text-emerald-400">{entry.org}</span>
 						</h3>
 						<p className="mt-1 text-xs leading-relaxed text-white/45">{entry.description}</p>
 					</li>

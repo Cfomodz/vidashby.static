@@ -1,14 +1,14 @@
-# Browser Use: AI Web Automation
+# Browser Use
 
-`browser-use/browser-use` · contributor
+`browser-use/browser-use` | contributor
 
-![Browser Use: AI Web Automation](/assets/projects/browser.gif)
+![Browser Use](/assets/projects/browser.gif)
 
-Contributor to an open-source AI browser agent with 70k+ stars. I closed 50 issues in 48 hours and worked with the founders on security hardening, bot-detection bypass and keeping credentials out of LLM contexts.
+Contributor to an open-source AI browser agent with 119.1k stars. I closed 50 issues in 48 hours and worked with the founders on security hardening, bot-detection bypass and keeping credentials out of LLM contexts.
 
-**Highlight:** 71.9k ★
+**Highlight:** 119.1k ★
 
-**Stack:** Python · Playwright · Security
+**Stack:** Python | Playwright | Security
 
 ## Links
 
