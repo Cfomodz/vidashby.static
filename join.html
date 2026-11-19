@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Ashby</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Helvetica Neue', -apple-system, sans-serif;
+            background: #000;
+            color: #ccc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .brand h1 {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+        }
+
+        .brand p {
+            font-size: 0.85rem;
+            color: #555;
+            margin-top: 0.75rem;
+            letter-spacing: 0.15em;
+        }
+
+        .paths {
+            display: flex;
+            gap: 1.5rem;
+            max-width: 680px;
+            width: 100%;
+        }
+
+        .path-card {
+            flex: 1;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: border-color 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .path-card:hover {
+            border-color: #333;
+        }
+
+        .path-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #444;
+            margin-bottom: 1.25rem;
+        }
+
+        .path-card h2 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #fff;
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+        }
+
+        .path-card p {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            flex: 1;
+        }
+
+        .path-cta {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .path-cta.primary {
+            background: #fff;
+            color: #000;
+        }
+
+        .path-cta.primary:hover {
+            background: #e0e0e0;
+        }
+
+        .path-cta.secondary {
+            background: transparent;
+            color: #999;
+            border: 1px solid #333;
+        }
+
+        .path-cta.secondary:hover {
+            border-color: #555;
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #111;
+        }
+
+        .foot-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .foot-links a {
+            color: #333;
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+        }
+
+        .foot-links a:hover { color: #777; }
+
+        @media (max-width: 600px) {
+            .paths { flex-direction: column; }
+            .path-card { padding: 2rem 1.5rem; }
+            .brand h1 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="brand">
+            <h1>David Ashby</h1>
+            <p>n8n &middot; Automation &middot; AI</p>
+        </div>
+
+        <div class="paths">
+            <div class="path-card">
+                <div class="path-label">Free Community</div>
+                <h2>Nodes Automation Lab</h2>
+                <p>500+ members learning automation fundamentals and sharing workflows</p>
+                <a href="https://www.skool.com/n8n-nodes-automation-lab-1570" class="path-cta secondary" target="_blank">Join Free</a>
+            </div>
+
+            <div class="path-card">
+                <div class="path-label">Beyond Nodes</div>
+                <h2>Build a Business With Automation</h2>
+                <p>The system behind $5K+ in workflow sales and 200+ published templates</p>
+                <a href="start.html" class="path-cta primary">Get Started</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="foot-links">
+            <a href="https://www.linkedin.com/in/david-ashby/" target="_blank">LinkedIn</a>
+            <a href="https://github.com/Cfomodz" target="_blank">GitHub</a>
+            <a href="https://n8n.io/creators/" target="_blank">n8n</a>
+        </div>
+    </footer>
+</body>
+</html>
